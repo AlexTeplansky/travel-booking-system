@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Location extends PanacheEntityBase {
@@ -17,8 +18,8 @@ public class Location extends PanacheEntityBase {
     @Basic
     @Column(name = "address")
     private String address;
-    @OneToMany(mappedBy = "locationByLocationId")
-    private Collection<Car> carsByLocationId;
+    @OneToMany(mappedBy = "location")
+    private List<Car> cars;
 
     public Integer getLocationId() {
         return locationId;
@@ -66,11 +67,11 @@ public class Location extends PanacheEntityBase {
         return result;
     }
 
-    public Collection<Car> getCarsByLocationId() {
-        return carsByLocationId;
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public void setCarsByLocationId(Collection<Car> carsByLocationId) {
-        this.carsByLocationId = carsByLocationId;
-    }
+//    public void setCarsByLocationId(Collection<Car> carsByLocationId) {
+//        this.carsByLocationId = carsByLocationId;
+//    }
 }

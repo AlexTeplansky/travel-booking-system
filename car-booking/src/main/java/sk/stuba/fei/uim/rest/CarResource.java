@@ -21,7 +21,12 @@ public class CarResource {
         return Response.ok(carAS.getCarDetail(id)).build();
     }
 
-
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/locations")
+    public Response getLocations() {
+        return Response.ok(carAS.getLocationSelectList()).build();
+    }
 
 
 }

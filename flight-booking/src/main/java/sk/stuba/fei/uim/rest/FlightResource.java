@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import sk.stuba.fei.uim.as.FlightAS;
 
-@Path("/api/hotel")
+@Path("/api/flight")
 
 public class FlightResource {
 

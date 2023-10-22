@@ -15,9 +15,9 @@ public class CarRental extends PanacheEntityBase {
     @Basic
     @Column(name = "user_id")
     private Integer userId;
-    @Basic
-    @Column(name = "car_id")
-    private Integer carId;
+    @ManyToOne
+    @JoinColumn(name="car_id", nullable=false)
+    private Car car;
     @Basic
     @Column(name = "driver_name")
     private String driverName;
@@ -33,9 +33,6 @@ public class CarRental extends PanacheEntityBase {
     @Basic
     @Column(name = "booking_date")
     private Date bookingDate;
-    @ManyToOne
-    @JoinColumn(name = "car_id", referencedColumnName = "car_id", nullable = false)
-    private Car carByCarId;
 
     public Integer getRentalId() {
         return rentalId;
@@ -53,12 +50,12 @@ public class CarRental extends PanacheEntityBase {
         this.userId = userId;
     }
 
-    public Integer getCarId() {
-        return carId;
+    public Car getCar() {
+        return car;
     }
 
-    public void setCarId(Integer carId) {
-        this.carId = carId;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     public String getDriverName() {
@@ -110,7 +107,7 @@ public class CarRental extends PanacheEntityBase {
 
         if (rentalId != null ? !rentalId.equals(carRental.rentalId) : carRental.rentalId != null) return false;
         if (userId != null ? !userId.equals(carRental.userId) : carRental.userId != null) return false;
-        if (carId != null ? !carId.equals(carRental.carId) : carRental.carId != null) return false;
+        if (car != null ? !car.equals(carRental.car) : carRental.car != null) return false;
         if (driverName != null ? !driverName.equals(carRental.driverName) : carRental.driverName != null) return false;
         if (pickupDate != null ? !pickupDate.equals(carRental.pickupDate) : carRental.pickupDate != null) return false;
         if (returnDate != null ? !returnDate.equals(carRental.returnDate) : carRental.returnDate != null) return false;
@@ -125,20 +122,12 @@ public class CarRental extends PanacheEntityBase {
     public int hashCode() {
         int result = rentalId != null ? rentalId.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (carId != null ? carId.hashCode() : 0);
+        result = 31 * result + (car != null ? car.hashCode() : 0);
         result = 31 * result + (driverName != null ? driverName.hashCode() : 0);
         result = 31 * result + (pickupDate != null ? pickupDate.hashCode() : 0);
         result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (bookingDate != null ? bookingDate.hashCode() : 0);
         return result;
-    }
-
-    public Car getCarByCarId() {
-        return carByCarId;
-    }
-
-    public void setCarByCarId(Car carByCarId) {
-        this.carByCarId = carByCarId;
     }
 }

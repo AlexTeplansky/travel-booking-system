@@ -3,15 +3,18 @@ package sk.stuba.fei.uim.entity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
+import java.util.Collection;
+import java.util.List;
+
 @Entity
 public class Car extends PanacheEntityBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "car_id")
     private Integer carId;
-    @Basic
-    @Column(name = "location_id")
-    private Integer locationId;
+    @ManyToOne
+    @JoinColumn(name="location_id", nullable=false)
+    private Location location;
     @Basic
     @Column(name = "model")
     private String model;
@@ -27,6 +30,8 @@ public class Car extends PanacheEntityBase {
     @Basic
     @Column(name = "daily_rate")
     private Integer dailyRate;
+    @OneToMany(mappedBy = "car")
+    private List<CarRental> rentals;
 
     public Integer getCarId() {
         return carId;
@@ -36,12 +41,12 @@ public class Car extends PanacheEntityBase {
         this.carId = carId;
     }
 
-    public Integer getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(Integer locationId) {
-        this.locationId = locationId;
+    public void setlocation(Location location) {
+        this.location = location;
     }
 
     public String getModel() {
@@ -92,7 +97,7 @@ public class Car extends PanacheEntityBase {
         Car car = (Car) o;
 
         if (carId != null ? !carId.equals(car.carId) : car.carId != null) return false;
-        if (locationId != null ? !locationId.equals(car.locationId) : car.locationId != null) return false;
+        if (location != null ? !location.equals(car.location) : car.location != null) return false;
         if (model != null ? !model.equals(car.model) : car.model != null) return false;
         if (brand != null ? !brand.equals(car.brand) : car.brand != null) return false;
         if (year != null ? !year.equals(car.year) : car.year != null) return false;
@@ -105,12 +110,24 @@ public class Car extends PanacheEntityBase {
     @Override
     public int hashCode() {
         int result = carId != null ? carId.hashCode() : 0;
-        result = 31 * result + (locationId != null ? locationId.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (brand != null ? brand.hashCode() : 0);
         result = 31 * result + (year != null ? year.hashCode() : 0);
         result = 31 * result + (available != null ? available.hashCode() : 0);
         result = 31 * result + (dailyRate != null ? dailyRate.hashCode() : 0);
         return result;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public List<CarRental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<CarRental> rentals) {
+        this.rentals = rentals;
     }
 }
