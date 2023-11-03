@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import sk.stuba.fei.uim.as.CarAS;
 import sk.stuba.fei.uim.entity.dto.CreateCarRentalDTO;
-import sk.stuba.fei.uim.entity.dto.CreateUserDTO;
+import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
 
 @Path("/api/car")
 @ApplicationScoped
@@ -44,11 +44,10 @@ public class CarResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/user")
+    @Path("/customer")
     @Transactional
-    public Response createUser(CreateUserDTO createUserDTO) {
-        carAS.createUser(createUserDTO);
-
+    public Response createUser(CreateCustomerDTO createCustomerDTO) {
+        carAS.createCustomer(createCustomerDTO);
         return Response.ok().build();
     }
 

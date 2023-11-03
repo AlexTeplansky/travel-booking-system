@@ -8,7 +8,7 @@ import sk.stuba.fei.uim.entity.car.Car;
 import sk.stuba.fei.uim.entity.car.Location;
 import sk.stuba.fei.uim.entity.customer.Customer;
 import sk.stuba.fei.uim.entity.dto.CreateCarRentalDTO;
-import sk.stuba.fei.uim.entity.dto.CreateUserDTO;
+import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
 import sk.stuba.fei.uim.entity.dto.GetCarDetailDTO;
 import sk.stuba.fei.uim.entity.dto.SelecItemDTO;
 import sk.stuba.fei.uim.mapping.CarMapping;
@@ -41,12 +41,12 @@ public class CarAS {
     }
 
     @Transactional
-    public void createUser(CreateUserDTO createUserDTO) {
-        Customer user = new Customer();
-        user.setEmail(createUserDTO.getEmail());
-        user.setFirstName(createUserDTO.getFirstName());
-        user.setLastName(createUserDTO.getLastName());
-        user.setIdCard(createUserDTO.getIdCard());
-        user.persist();
+    public void createCustomer(CreateCustomerDTO createCustomerDTO) {
+        Customer customer = new Customer();
+        customer.setEmail(createCustomerDTO.getEmail());
+        customer.setFirstName(createCustomerDTO.getFirstName());
+        customer.setLastName(createCustomerDTO.getLastName());
+        customer.setIdCard(createCustomerDTO.getIdCard());
+        customer.persist();
     }
 }

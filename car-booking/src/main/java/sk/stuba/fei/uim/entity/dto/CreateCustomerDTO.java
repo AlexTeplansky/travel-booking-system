@@ -1,9 +1,6 @@
 package sk.stuba.fei.uim.entity.dto;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-
-public class CreateUserDTO {
+public class CreateCustomerDTO {
     private String firstName;
 
     private String lastName;
