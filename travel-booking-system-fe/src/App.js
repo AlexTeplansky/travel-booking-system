@@ -1,25 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+
+import CarSearchForm from "./SearchForms/CarSearchForm";
+import HotelSearchForm from "./SearchForms/HotelSearchForm";
+import FlightSearchForm from "./SearchForms/FlightSearchForm";
+import MainMenu from "./MainMenu";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="root">
+        <h1 className="header1">Travel Booking System</h1>
+        <MainMenu/>
+      </div>
+
   );
 }
 
 export default App;
+

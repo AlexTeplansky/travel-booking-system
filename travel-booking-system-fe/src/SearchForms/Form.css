@@ -1,0 +1,89 @@
+.form {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.6em;
+    display: grid;
+    justify-items: center;
+}
+.searchFormRow{
+    width: 22em;
+    padding: 0.4em;
+    display: flex;
+    justify-content: space-between;
+}
+.searchFormItem{
+    box-sizing: border-box;
+    width: 100%;
+    padding:0  0.4em;
+}
+
+/* * * * * * * * * INPUT TYPES * * * * * * * * */
+
+/*INPUT GENERAL*/
+.input {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 0.4em;
+    font: inherit;
+    background: #3F4365;
+    border: transparent;
+    outline: transparent;
+    color: #d4d2d2;
+}
+
+.input:focus {
+    border-left: 2px solid #f9b17a;
+}
+
+.input::placeholder {
+    color: #919090;
+}
+
+
+/*INPUT DATE*/
+
+.input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url(../Images/icons8-calendar-100.png) center/100% no-repeat;
+}
+
+.input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    background: url(../Images/icons8-calendar-100.png) center/120% no-repeat;
+    cursor: pointer;
+}
+
+/*INPUT TIME*/
+
+
+.input[type="time"]::-webkit-calendar-picker-indicator {
+    background: url(../Images/icons8-clock-100.png) center/100% no-repeat;
+}
+
+.input[type="time"]::-webkit-calendar-picker-indicator:hover {
+    background: url(../Images/icons8-clock-100.png) center/120% no-repeat;
+    cursor: pointer;
+}
+
+/*INPUT NUMBER*/
+.input[type="number"] {
+
+    width: 3em;
+
+}
+
+.input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/*LABEL*/
+.myLabelStyle {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: #636B97;
+}

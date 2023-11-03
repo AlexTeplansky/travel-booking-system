@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+.classicButton{
+    width:10em;
+    background: transparent;
+    padding: 0.6em;
+    margin: 1em 0.5em 0.5em;
+
+    /*text*/
+    color: #f9b17a;
+    /*font-size: 1.2em;*/
+    font-family: 'Quicksand', sans-serif;
+
+    /*border*/
+    border-radius: 0.2em;
+    border: 1px solid #f9b17a;
+}
+
+.classicButton:hover{
+    cursor:pointer;
+    background: #f9b17a;
+    color: #151D2F;/*color of the background*/
+    box-shadow: 0 0 5px 5px rgba(249,177,122,0.3);
+}
+
+
+.inputNumberButton{
+    width: 1.7em;
+    margin: 0;
+    padding: 0.4em 0;
+    font: inherit;
+    background: #636B97;
+    border: transparent;
+    outline: transparent;
+    color: #d4d2d2;
+
+}
+.inputNumberButton:hover{
+    cursor: pointer;
+    font-weight: bolder;
+}
+.increaseButton{
+    border-top-right-radius: 0.2em;
+    border-bottom-right-radius: 0.2em;
+
+}
+.decreaseButton{
+    border-top-left-radius: 0.2em;
+    border-bottom-left-radius: 0.2em;
+
+}
