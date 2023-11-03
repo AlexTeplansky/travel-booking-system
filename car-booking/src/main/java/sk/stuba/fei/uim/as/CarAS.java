@@ -36,13 +36,15 @@ public class CarAS {
         return locations.stream().map(l -> new SelecItemDTO(l.getCity(), l.getCity() + ", " + l.getAddress())).toList();
     }
 
-    public List<SelecItemDTO> getAvailableCars(Integer locationId) {
+    public List<SelecItemDTO> getAvailableCarsSelectList(Integer locationId) {
         List<Car> availableCars = Car.find("available = ?1 and location.id = ?2", true, locationId).list();
         return availableCars.stream().map(car -> new SelecItemDTO(car.getCarId().toString(), car.getBrand() + " " + car.getModel() + " " + car.getYear())).toList();
     }
 
     @Transactional
     public void createCarRental(CreateCarRentalDTO createCarRentDTO) throws Exception {
+
+        // Skontrolujeme ci existuje zakaznik (pre istotu), skontrolujeme ci je zvolene auto dostupne (pre istotu)
         if(Customer.findById(createCarRentDTO.getUserId()) == null)
             throw new NotFoundException("Zákazník sa nenašiel.");
         Car car = Car.findById(createCarRentDTO.getCarId());
@@ -50,8 +52,10 @@ public class CarAS {
             throw new Exception("Auto je už obsadene.");
         CarRental carRental = new CarRental();
 
+        // Nastavime auto na nedostupne
         car.setAvailable(false);
 
+        // Nastavime info pre objednavku
         carRental.setCar(car);
         carRental.setUserId(createCarRentDTO.getUserId());
         carRental.setDriverName(createCarRentDTO.getDriverName());
@@ -60,14 +64,28 @@ public class CarAS {
         carRental.setStatus(createCarRentDTO.getStatus());
         carRental.setBookingDate(LocalDate.now());
 
+        // Vypocitame vyslednu cenu
         Integer days = carRental.getReturnDate().compareTo(carRental.getPickupDate());
         carRental.setPrice((double) (days * car.getDailyRate()));
 
+        // Ulozime do DB
         carRental.persist();
     }
 
     @Transactional
     public Integer createCustomer(CreateCustomerDTO createCustomerDTO) {
+
+        /**
+         * Ak uz je v DB zaznam s danym idCard (predpokladame ze idCard ako OP alebo pas su jedinecne pre cloveka),
+         * znamena to ze uzivatel uz je v databaze a mozme pracovat s tymto zaznamoma netreba nam vytvarat novy zaznam.
+         * Inak vytvorime novy a pracujeme s nim.
+         *
+         * Vraciame Id uzivatela.
+         * */
+        Customer existingCustomer = Customer.find("idCard = ?1", createCustomerDTO.getIdCard()).firstResult();
+        if(existingCustomer != null)
+            return existingCustomer.getCustomerId();
+
         Customer customer = new Customer();
         customer.setEmail(createCustomerDTO.getEmail());
         customer.setFirstName(createCustomerDTO.getFirstName());
