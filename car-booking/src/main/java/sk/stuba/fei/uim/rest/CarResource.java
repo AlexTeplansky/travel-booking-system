@@ -32,11 +32,19 @@ public class CarResource {
         return Response.ok(carAS.getLocationSelectList()).build();
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/availableCars/{locationId}")
+    public Response getLocations(@PathParam("locationId") Integer locationId) {
+        return Response.ok(carAS.getAvailableCars(locationId)).build();
+    }
+
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/rent")
-    public Response createCarRental(CreateCarRentalDTO createCarRentDTO) {
+    public Response createCarRental(CreateCarRentalDTO createCarRentDTO) throws Exception {
         carAS.createCarRental(createCarRentDTO);
         return Response.ok().build();
     }
@@ -47,8 +55,7 @@ public class CarResource {
     @Path("/customer")
     @Transactional
     public Response createUser(CreateCustomerDTO createCustomerDTO) {
-        carAS.createCustomer(createCustomerDTO);
-        return Response.ok().build();
+        return Response.ok(carAS.createCustomer(createCustomerDTO)).build();
     }
 
 

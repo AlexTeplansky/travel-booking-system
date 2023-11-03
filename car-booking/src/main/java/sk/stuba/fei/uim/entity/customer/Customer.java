@@ -24,11 +24,11 @@ public class Customer extends PanacheEntityBase {
     @Column(name = "id_card")
     private String idCard;
 
-    public Integer getcustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setcustomerId(Integer customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
