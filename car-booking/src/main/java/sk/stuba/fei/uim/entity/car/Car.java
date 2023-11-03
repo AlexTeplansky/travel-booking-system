@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@SequenceGenerator(name = "carSequence", sequenceName = "carsequence", allocationSize = 1, initialValue = 10)
 public class Car extends PanacheEntityBase {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "carSequence", strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "car_id")
     private Integer carId;

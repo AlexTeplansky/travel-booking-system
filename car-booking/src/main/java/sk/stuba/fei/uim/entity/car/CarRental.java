@@ -4,12 +4,14 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "car_rental", schema = "public", catalog = "car_db")
+@SequenceGenerator(name = "carSequence", sequenceName = "carsequence", allocationSize = 1, initialValue = 10)
 public class CarRental extends PanacheEntityBase {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "carSequence", strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "rental_id")
     private Integer rentalId;
@@ -24,16 +26,27 @@ public class CarRental extends PanacheEntityBase {
     private String driverName;
     @Basic
     @Column(name = "pickup_date")
-    private Date pickupDate;
+    private LocalDate pickupDate;
     @Basic
     @Column(name = "return_date")
-    private Date returnDate;
+    private LocalDate returnDate;
     @Basic
     @Column(name = "status")
     private String status;
     @Basic
     @Column(name = "booking_date")
-    private Date bookingDate;
+    private LocalDate bookingDate;
+    @Basic
+    @Column(name = "price")
+    private Double price;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public Integer getRentalId() {
         return rentalId;
@@ -67,19 +80,19 @@ public class CarRental extends PanacheEntityBase {
         this.driverName = driverName;
     }
 
-    public Date getPickupDate() {
+    public LocalDate getPickupDate() {
         return pickupDate;
     }
 
-    public void setPickupDate(Date pickupDate) {
+    public void setPickupDate(LocalDate pickupDate) {
         this.pickupDate = pickupDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -91,11 +104,11 @@ public class CarRental extends PanacheEntityBase {
         this.status = status;
     }
 
-    public Date getBookingDate() {
+    public LocalDate getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(Date bookingDate) {
+    public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
 
