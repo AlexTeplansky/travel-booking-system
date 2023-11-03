@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.entity;
+package sk.stuba.fei.uim.entity.car;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
@@ -8,6 +8,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "car_rental", schema = "public", catalog = "car_db")
 public class CarRental extends PanacheEntityBase {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "rental_id")

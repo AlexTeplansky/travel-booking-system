@@ -1,14 +1,18 @@
 package sk.stuba.fei.uim.rest;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import sk.stuba.fei.uim.as.CarAS;
+import sk.stuba.fei.uim.entity.dto.CreateCarRentalDTO;
+import sk.stuba.fei.uim.entity.dto.CreateUserDTO;
 
 @Path("/api/car")
-
+@ApplicationScoped
 public class CarResource {
 
     @Inject
@@ -26,6 +30,26 @@ public class CarResource {
     @Path("/locations")
     public Response getLocations() {
         return Response.ok(carAS.getLocationSelectList()).build();
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/rent")
+    public Response createCarRental(CreateCarRentalDTO createCarRentDTO) {
+        carAS.createCarRental(createCarRentDTO);
+        return Response.ok().build();
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/user")
+    @Transactional
+    public Response createUser(CreateUserDTO createUserDTO) {
+        carAS.createUser(createUserDTO);
+
+        return Response.ok().build();
     }
 
 

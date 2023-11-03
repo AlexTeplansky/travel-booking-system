@@ -1,7 +1,7 @@
 package sk.stuba.fei.uim.mapping;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import sk.stuba.fei.uim.entity.Car;
+import sk.stuba.fei.uim.entity.car.Car;
 import sk.stuba.fei.uim.entity.dto.GetCarDetailDTO;
 
 @ApplicationScoped

@@ -1,9 +1,8 @@
-package sk.stuba.fei.uim.entity;
+package sk.stuba.fei.uim.entity.car;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @Entity

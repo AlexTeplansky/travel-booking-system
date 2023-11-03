@@ -1,11 +1,5 @@
 package sk.stuba.fei.uim.entity.dto;
 
-import jakarta.persistence.*;
-import sk.stuba.fei.uim.entity.CarRental;
-import sk.stuba.fei.uim.entity.Location;
-
-import java.util.List;
-
 public class GetCarDetailDTO {
 
     private Integer carId;
