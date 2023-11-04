@@ -16,6 +16,11 @@
     width: 100%;
     padding:0  0.4em;
 }
+.bordered{
+    border: 1px solid white;
+    margin: 1%;
+    border-radius: 2%;
+}
 
 /* * * * * * * * * INPUT TYPES * * * * * * * * */
 

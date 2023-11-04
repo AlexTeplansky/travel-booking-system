@@ -1,6 +1,6 @@
 import './App.css';
 
-import CarSearchForm from "./SearchForms/CarSearchForm";
+import CarSearchForm from "./SearchForms/car/CarSearchForm";
 import HotelSearchForm from "./SearchForms/HotelSearchForm";
 import FlightSearchForm from "./SearchForms/FlightSearchForm";
 import MainMenu from "./MainMenu";

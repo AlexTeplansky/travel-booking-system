@@ -2,7 +2,7 @@ import './App.css';
 
 import {useState} from 'react';
 
-import CarSearchForm from "./SearchForms/CarSearchForm";
+import CarSearchForm from "./SearchForms/car/CarSearchForm";
 import HotelSearchForm from "./SearchForms/HotelSearchForm";
 import FlightSearchForm from "./SearchForms/FlightSearchForm";
 import Home from "./Home";
