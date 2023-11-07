@@ -1,7 +1,9 @@
-package sk.stuba.fei.uim.entity;
+package sk.stuba.fei.uim.entity.hotel;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Room extends PanacheEntityBase {
@@ -9,9 +11,10 @@ public class Room extends PanacheEntityBase {
     @Id
     @Column(name = "room_id")
     private Integer roomId;
-    @Basic
-    @Column(name = "hotel_id")
-    private Integer hotelId;
+
+    @ManyToOne
+    @JoinColumn(name="hotel_id", nullable=false)
+    private Hotel hotel;
     @Basic
     @Column(name = "room_type")
     private String roomType;
@@ -22,6 +25,21 @@ public class Room extends PanacheEntityBase {
     @Column(name = "available")
     private Boolean available;
 
+    @Basic
+    @Column(name = "daily_rate")
+    private Integer dailyRate;
+
+    public Integer getDailyRate() {return dailyRate;}
+
+    public void setDailyRate(Integer dailyRate) {this.dailyRate = dailyRate;}
+
+    @OneToMany(mappedBy = "room")
+    private List<RoomReservation> reservations;
+
+    public List<RoomReservation> getReservations() {return reservations;}
+
+    public void setReservations(List<RoomReservation> reservations) {this.reservations = reservations;}
+
     public Integer getRoomId() {
         return roomId;
     }
@@ -30,12 +48,12 @@ public class Room extends PanacheEntityBase {
         this.roomId = roomId;
     }
 
-    public Integer getHotelId() {
-        return hotelId;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setHotelId(Integer hotelId) {
-        this.hotelId = hotelId;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
     public String getRoomType() {
@@ -70,7 +88,7 @@ public class Room extends PanacheEntityBase {
         Room room = (Room) o;
 
         if (roomId != null ? !roomId.equals(room.roomId) : room.roomId != null) return false;
-        if (hotelId != null ? !hotelId.equals(room.hotelId) : room.hotelId != null) return false;
+        if (hotel != null ? !hotel.equals(room.hotel) : room.hotel != null) return false;
         if (roomType != null ? !roomType.equals(room.roomType) : room.roomType != null) return false;
         if (capacity != null ? !capacity.equals(room.capacity) : room.capacity != null) return false;
         if (available != null ? !available.equals(room.available) : room.available != null) return false;
@@ -81,7 +99,7 @@ public class Room extends PanacheEntityBase {
     @Override
     public int hashCode() {
         int result = roomId != null ? roomId.hashCode() : 0;
-        result = 31 * result + (hotelId != null ? hotelId.hashCode() : 0);
+        result = 31 * result + (hotel != null ? hotel.hashCode() : 0);
         result = 31 * result + (roomType != null ? roomType.hashCode() : 0);
         result = 31 * result + (capacity != null ? capacity.hashCode() : 0);
         result = 31 * result + (available != null ? available.hashCode() : 0);

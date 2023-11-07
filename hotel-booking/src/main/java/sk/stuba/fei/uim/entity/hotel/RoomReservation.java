@@ -1,9 +1,10 @@
-package sk.stuba.fei.uim.entity;
+package sk.stuba.fei.uim.entity.hotel;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "room_reservation", schema = "public", catalog = "hotel_db")
@@ -13,23 +14,36 @@ public class RoomReservation extends PanacheEntityBase {
     @Column(name = "reservation_id")
     private Integer reservationId;
     @Basic
-    @Column(name = "room_id")
-    private Integer roomId;
-    @Basic
     @Column(name = "user_id")
     private Integer userId;
     @Basic
     @Column(name = "data_in")
-    private Date dataIn;
+    private LocalDate dateIn;
     @Basic
     @Column(name = "date_out")
-    private Date dateOut;
+    private LocalDate dateOut;
     @Basic
     @Column(name = "status")
     private String status;
     @Basic
     @Column(name = "booking_date")
-    private Date bookingDate;
+    private LocalDate bookingDate;
+
+    @Basic
+    @Column(name = "price")
+    private Double price;
+
+    public Double getPrice() {return price;}
+
+    public void setPrice(Double price) {this.price = price;}
+
+    @ManyToOne
+    @JoinColumn(name="room_id", nullable=false)
+    private Room room;
+
+    public Room getRoom() {return room;}
+
+    public void setRoom(Room room) {this.room = room;}
 
     public Integer getReservationId() {
         return reservationId;
@@ -37,14 +51,6 @@ public class RoomReservation extends PanacheEntityBase {
 
     public void setReservationId(Integer reservationId) {
         this.reservationId = reservationId;
-    }
-
-    public Integer getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
     }
 
     public Integer getUserId() {
@@ -55,19 +61,19 @@ public class RoomReservation extends PanacheEntityBase {
         this.userId = userId;
     }
 
-    public Date getDataIn() {
-        return dataIn;
+    public LocalDate getDateIn() {
+        return dateIn;
     }
 
-    public void setDataIn(Date dataIn) {
-        this.dataIn = dataIn;
+    public void setDateIn(LocalDate dataIn) {
+        this.dateIn = dataIn;
     }
 
-    public Date getDateOut() {
+    public LocalDate getDateOut() {
         return dateOut;
     }
 
-    public void setDateOut(Date dateOut) {
+    public void setDateOut(LocalDate dateOut) {
         this.dateOut = dateOut;
     }
 
@@ -79,11 +85,11 @@ public class RoomReservation extends PanacheEntityBase {
         this.status = status;
     }
 
-    public Date getBookingDate() {
+    public LocalDate getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(Date bookingDate) {
+    public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
 
@@ -96,9 +102,9 @@ public class RoomReservation extends PanacheEntityBase {
 
         if (reservationId != null ? !reservationId.equals(that.reservationId) : that.reservationId != null)
             return false;
-        if (roomId != null ? !roomId.equals(that.roomId) : that.roomId != null) return false;
+        if (room != null ? !room.equals(that.room) : that.room != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (dataIn != null ? !dataIn.equals(that.dataIn) : that.dataIn != null) return false;
+        if (dateIn != null ? !dateIn.equals(that.dateIn) : that.dateIn != null) return false;
         if (dateOut != null ? !dateOut.equals(that.dateOut) : that.dateOut != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (bookingDate != null ? !bookingDate.equals(that.bookingDate) : that.bookingDate != null) return false;
@@ -109,9 +115,9 @@ public class RoomReservation extends PanacheEntityBase {
     @Override
     public int hashCode() {
         int result = reservationId != null ? reservationId.hashCode() : 0;
-        result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
+        result = 31 * result + (room != null ? room.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (dataIn != null ? dataIn.hashCode() : 0);
+        result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (bookingDate != null ? bookingDate.hashCode() : 0);

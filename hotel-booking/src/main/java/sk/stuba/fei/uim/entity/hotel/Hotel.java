@@ -1,7 +1,9 @@
-package sk.stuba.fei.uim.entity;
+package sk.stuba.fei.uim.entity.hotel;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Hotel extends PanacheEntityBase {
@@ -18,6 +20,13 @@ public class Hotel extends PanacheEntityBase {
     @Basic
     @Column(name = "address")
     private String address;
+
+    @OneToMany(mappedBy = "hotel")
+    private List<Room> rooms;
+
+    public List<Room> getRooms() {return rooms;}
+
+    public void setRooms(List<Room> rooms) {this.rooms = rooms;}
 
     public Integer getHotelId() {
         return hotelId;
