@@ -3,10 +3,16 @@ import '../Button.css';
 import './Form.css';
 
 import NumberInput from "./NumberInput";
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
+import numberInput from "./NumberInput";
 
 
 function HotelSearchForm() {
+
+
+    function submitForm() {
+        //TODO:connect with backend
+    }
 
     return (
         <div className="form">
@@ -35,20 +41,20 @@ function HotelSearchForm() {
                     <div className="searchFormItem"
                          id="NumOfAdulst">
                         <label className="myLabelStyle">Adults</label>
-                        <NumberInput/>
+                        <NumberInput id="NumOfAdults"/>
                     </div>
                     <div className="searchFormItem">
                         <label className="myLabelStyle">Children</label>
-                        <NumberInput/>
+                        <NumberInput id="NumOfChildren"/>
                     </div>
-                    <div className="searchFormItem">
+                    <div className="searchFormItem" id="RoomDiv">
                         <label className="myLabelStyle">Rooms</label>
-                        <NumberInput/>
+                        <NumberInput id="NumOfRooms"/>
                     </div>
                 </div>
             </div>
 
-            <button className="classicButton">Search</button>
+            <button className="classicButton" onClick={submitForm}>Search</button>
         </div>
     );
 }
