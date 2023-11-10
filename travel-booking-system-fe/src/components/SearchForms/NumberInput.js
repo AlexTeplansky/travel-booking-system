@@ -6,7 +6,7 @@ function NumberInput(props) {
     const numberInput = useRef(null);
 
     function decreaseNumber() {
-        if (numberInput.current.value > 0)
+        if (numberInput.current.value > props.defaultValue)
             numberInput.current.value -= 1;
     }
 
@@ -26,7 +26,7 @@ function NumberInput(props) {
                 type={"number"}
                 ref={numberInput}
                 id={props.id}
-                defaultValue={0}
+                defaultValue={props.defaultValue}
             />
             <button
                 className="inputNumberButton  increaseButton"

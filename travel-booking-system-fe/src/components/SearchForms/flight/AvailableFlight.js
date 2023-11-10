@@ -38,14 +38,6 @@ function AvailableFlight({flight, onSelect, isSelected}) {
                 </div>
             </div>
 
-            <div className="searchFormRow">
-                <div className="searchFormItem">
-                    <label className="responseText">Available seats: </label>
-                </div>
-                <div className="searchFormItem">
-                    <label className="responseText">{flight.availableSeats}</label>
-                </div>
-            </div>
 
             {onSelect !== undefined &&
                 <div className="searchFormRow">

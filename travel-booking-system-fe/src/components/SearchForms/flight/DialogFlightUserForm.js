@@ -4,13 +4,13 @@ import AvailableFlight from "./AvailableFlight";
 import UserForm from "./UserForm";
 
 
-function DialogFlightUserForm({flight, origin, destination, departureDate, returnDate, handleClose}) {
+function DialogFlightUserForm({flight, origin, destination, departureDate, returnDate, numOfPassengers, handleClose}) {
 
     return (
         <div className="form">
             <div className="searchFormRow">
                 <div className="searchFormItem">
-                    <label className="myLabelStyle">Price for your car rental is <strong>{flight.ticketPrice}$</strong>.</label>
+                    <label className="myLabelStyle">Price for your flight reservation is <strong>{flight.ticketPrice * numOfPassengers}$</strong>.</label>
                 </div>
             </div>
             <div className="searchFormRow">
@@ -36,14 +36,9 @@ function DialogFlightUserForm({flight, origin, destination, departureDate, retur
                 </div>
 
             </div>
-            <div className="searchFormRow">
-                <div className="searchFormItem">
-                    <label className="myLabelStyle">Available seats: <strong>{flight.availableSeats}</strong>.</label>
-                </div>
-            </div>
 
 
-            <UserForm flight={flight} handleClose={handleClose}/>
+            <UserForm flight={flight} numOfPassengers={numOfPassengers} handleClose={handleClose}/>
 
         </div>)
 }

@@ -3,12 +3,14 @@ package sk.stuba.fei.uim.entity.flight;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "flight_reservation", schema = "public", catalog = "flight_db")
+@SequenceGenerator(name = "flightSequence", sequenceName = "flightsequence", allocationSize = 1, initialValue = 10)
 public class FlightReservation extends PanacheEntityBase {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "flightSequence",strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "reservation_id")
     private Integer reservationId;
@@ -16,17 +18,20 @@ public class FlightReservation extends PanacheEntityBase {
     @Column(name = "user_id")
     private Integer userId;
     @Basic
+    @Column(name = "flight_id")
+    private Integer flightId;
+    @Basic
     @Column(name = "seat_number")
     private Integer seatNumber;
     @Basic
     @Column(name = "reservation_date")
-    private Date reservationDate;
+    private LocalDate reservationDate;
     @Basic
     @Column(name = "status")
     private String status;
-    @ManyToOne
-    @JoinColumn(name = "flight_id", nullable = false)
-    private Flight flight;
+    /*@ManyToOne
+    @JoinColumn(name = "flight_id", referencedColumnName = "flight_id", nullable = false)
+    private Flight flightByFlightId;*/
 
     public Integer getReservationId() {
         return reservationId;
@@ -44,6 +49,14 @@ public class FlightReservation extends PanacheEntityBase {
         this.userId = userId;
     }
 
+    public Integer getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(Integer flightId) {
+        this.flightId = flightId;
+    }
+
     public Integer getSeatNumber() {
         return seatNumber;
     }
@@ -52,11 +65,11 @@ public class FlightReservation extends PanacheEntityBase {
         this.seatNumber = seatNumber;
     }
 
-    public Date getReservationDate() {
+    public LocalDate getReservationDate() {
         return reservationDate;
     }
 
-    public void setReservationDate(Date reservationDate) {
+    public void setReservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
     }
 
@@ -66,14 +79,6 @@ public class FlightReservation extends PanacheEntityBase {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Flight getFlight() {
-        return flight;
-    }
-
-    public void setFlight(Flight flight) {
-        this.flight = flight;
     }
 
     @Override
@@ -86,6 +91,7 @@ public class FlightReservation extends PanacheEntityBase {
         if (reservationId != null ? !reservationId.equals(that.reservationId) : that.reservationId != null)
             return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (flightId != null ? !flightId.equals(that.flightId) : that.flightId != null) return false;
         if (seatNumber != null ? !seatNumber.equals(that.seatNumber) : that.seatNumber != null) return false;
         if (reservationDate != null ? !reservationDate.equals(that.reservationDate) : that.reservationDate != null)
             return false;
@@ -98,10 +104,18 @@ public class FlightReservation extends PanacheEntityBase {
     public int hashCode() {
         int result = reservationId != null ? reservationId.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (flightId != null ? flightId.hashCode() : 0);
         result = 31 * result + (seatNumber != null ? seatNumber.hashCode() : 0);
         result = 31 * result + (reservationDate != null ? reservationDate.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 
+  /* public Flight getFlightByFlightId() {
+        return flightByFlightId;
     }
+
+    public void setFlightByFlightId(Flight flightByFlightId) {
+        this.flightByFlightId = flightByFlightId;
+    }*/
+}

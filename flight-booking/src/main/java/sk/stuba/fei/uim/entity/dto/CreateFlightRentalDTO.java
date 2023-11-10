@@ -6,6 +6,8 @@ public class CreateFlightRentalDTO {
     private Integer flightId;
     private String passengerName;
 
+    private Integer numberOfPassengers;
+
     private String status;
 
     public Integer getUserId() {
@@ -38,5 +40,13 @@ public class CreateFlightRentalDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getNumberOfPassengers() {
+        return numberOfPassengers;
+    }
+
+    public void setNumberOfPassengers(Integer numberOfPassengers) {
+        this.numberOfPassengers = numberOfPassengers;
     }
 }

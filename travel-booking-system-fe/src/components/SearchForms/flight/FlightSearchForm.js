@@ -71,15 +71,16 @@ function FlightSearchForm({
             <div className="searchFormRow">
                 <div className="searchFormItem">
                     <label className="myLabelStyle">Adults</label>
-                    <NumberInput id="NumOfAdults"/>
+                    <NumberInput id="NumOfAdults" defaultValue = "1"/>
+
                 </div>
                 <div className="searchFormItem">
                     <label className="myLabelStyle">Children</label>
-                    <NumberInput id="NumOfChildren"/>
+                    <NumberInput id="NumOfChildren" defaultValue = "0"/>
                 </div>
                 <div className="searchFormItem">
-                    <label className="myLabelStyle">Infants</label>
-                    <NumberInput id="NumOfInfants"/>
+                    <label className="myLabelStyle" >Infants</label>
+                    <NumberInput id="NumOfInfants" defaultValue = "0"/>
                 </div>
             </div>
 
