@@ -1,6 +1,5 @@
-package sk.stuba.fei.uim.entity;
+package sk.stuba.fei.uim.entity.flight;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 

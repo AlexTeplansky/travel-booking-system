@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.entity;
+package sk.stuba.fei.uim.entity.flight;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
@@ -17,8 +17,8 @@ public class Airline extends PanacheEntityBase {
     @Basic
     @Column(name = "logo")
     private String logo;
-    @OneToMany(mappedBy = "airlineByAirlineId")
-    private Collection<Flight> flightsByAirlineId;
+   /* @OneToMany(mappedBy = "airlineByAirlineId")
+    private Collection<Flight> flightsByAirlineId;*/
 
     public Integer getAirlineId() {
         return airlineId;
@@ -66,11 +66,11 @@ public class Airline extends PanacheEntityBase {
         return result;
     }
 
-    public Collection<Flight> getFlightsByAirlineId() {
+  /*  public Collection<Flight> getFlightsByAirlineId() {
         return flightsByAirlineId;
     }
 
     public void setFlightsByAirlineId(Collection<Flight> flightsByAirlineId) {
         this.flightsByAirlineId = flightsByAirlineId;
-    }
+    }*/
 }

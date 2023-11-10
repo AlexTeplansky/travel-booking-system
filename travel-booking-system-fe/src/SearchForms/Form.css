@@ -87,3 +87,13 @@
     text-align: left;
     color: #636B97;
 }
+
+.responseText{
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: #a1aadc;
+}
