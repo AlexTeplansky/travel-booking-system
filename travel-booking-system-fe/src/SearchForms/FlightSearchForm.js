@@ -5,6 +5,11 @@ import './Form.css';
 import NumberInput from "./NumberInput";
 
 function FlightSearchForm() {
+
+    function submitForm() {
+        //TODO:connect with backend
+    }
+
     return (
         <div className="form">
             <h2 className="header2">Flights</h2>
@@ -38,21 +43,21 @@ function FlightSearchForm() {
                 <div className="searchFormRow">
                     <div className="searchFormItem">
                         <label className="myLabelStyle">Adults</label>
-                        <NumberInput/>
+                        <NumberInput id="NumOfAdults"/>
                     </div>
                     <div className="searchFormItem">
                         <label className="myLabelStyle">Children</label>
-                        <NumberInput/>
+                        <NumberInput id="NumOfChildren"/>
                     </div>
                     <div className="searchFormItem">
                         <label className="myLabelStyle">Infants</label>
-                        <NumberInput/>
+                        <NumberInput id="NumOfInfants"/>
                     </div>
                 </div>
 
             </div>
 
-            <button className="classicButton">Search</button>
+            <button className="classicButton" onClick={submitForm}>Search</button>
         </div>
     );
 }
