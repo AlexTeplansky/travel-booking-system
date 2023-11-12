@@ -1,5 +1,5 @@
-import '../../Button.css';
-import './Form.css';
+import '../../../Button.css';
+import '../../../style/Form.css';
 import {useRef} from "react";
 
 function NumberInput(props) {

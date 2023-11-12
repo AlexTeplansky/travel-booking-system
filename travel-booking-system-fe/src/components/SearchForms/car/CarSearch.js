@@ -1,6 +1,6 @@
 import '../../../App.css';
 import '../../../Button.css';
-import '../Form.css';
+import '../../../style/Form.css';
 import React from 'react';
 import {useEffect, useState} from "react";
 import axios from "axios";
