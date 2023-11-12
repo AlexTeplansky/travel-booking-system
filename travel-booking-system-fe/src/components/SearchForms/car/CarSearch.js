@@ -1,10 +1,18 @@
 import '../../../App.css';
 import '../../../Button.css';
 import '../Form.css';
+import React from 'react';
 import {useEffect, useState} from "react";
 import axios from "axios";
 import AvailableCar from "./AvailableCar";
 import CarSearchForm from "./CarSearchForm";
+import {Dialog, DialogContent, DialogTitle, Snackbar} from "@mui/material";
+import MuiAlert from '@mui/material/Alert';
+import DialogCarUserForm from "./DialogCarUserForm";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function CarSearch() {
     const [locations, setLocations] = useState([])
@@ -13,24 +21,41 @@ function CarSearch() {
     const [availableCars, setAvailableCars] = useState([])
     const [selectedCar, setSelectedCar] = useState({})
 
-    const [pickUp, setPickUp] = useState(null)
-    const [dropOff, setDropOff] = useState(null)
+    const [pickUp, setPickUp] = useState('')
+    const [dropOff, setDropOff] = useState('')
 
-    const [resultPrice, setResultPrice] = useState(0)
+    const [open, setOpen] = useState(false);
+    const [toastOpen, setToastOpen] = useState(false);
 
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleCloseToast = () => {
+        setToastOpen(false);
+    };
+
+    const handleCloseAfterSend = () => {
+        setPickUp('')
+        setDropOff('')
+        setAvailableCars([])
+        setSelectedCar({})
+        setSelectedLocation({})
+        setToastOpen(true)
+        handleClose()
+    };
 
     useEffect(() => {
         axios.get("http://localhost:8701/api/car/locations").then(res =>{
             setLocations(res.data)
-            setSelectedLocation(res.data[0].key)
+            setSelectedLocation(res.data[0])
         })
     }, []);
-
-    function countPrice(rate, pickUp, dropOff) {
-        const oneDay = 24 * 60 * 60 * 1000
-        const days = Math.round(Math.abs((Date.parse(pickUp) - Date.parse(dropOff)) / oneDay)) + 1
-        setResultPrice(days * rate)
-    }
 
     function handleSelectCar(car){
         if(car !== {}) {
@@ -41,11 +66,14 @@ function CarSearch() {
 
     function handleChangeSelectedLocation(e) {
         setAvailableCars([])
-        setSelectedLocation(e.target.value)
+        const selectedLocationArray = locations.filter(function (location){
+            return location.key === e.target.value
+        })
+        setSelectedLocation(selectedLocationArray[0])
     }
 
     function submitForm() {
-        axios.get(`http://localhost:8701/api/car/availableCars/` + selectedLocation).then(res => {
+        axios.get(`http://localhost:8701/api/car/availableCars/` + selectedLocation.key).then(res => {
             setAvailableCars(res.data)
         })
     }
@@ -62,10 +90,12 @@ function CarSearch() {
                            setDropOff={setDropOff}
             />
 
-            {pickUp !== null && dropOff !== null && <button className="classicButton" onClick={submitForm}>Search</button>}
+            {pickUp !== '' && dropOff !== '' &&
+                <button className="classicButton" onClick={submitForm}>Search</button>
+            }
 
             {availableCars.map(car => {
-                return(
+                return (
                     <AvailableCar
                         key={car.id}
                         car={car}
@@ -74,8 +104,29 @@ function CarSearch() {
                     />
                 )
             })}
-            {(selectedCar.id !== undefined && pickUp !== null && dropOff !== null) &&
-                <button className="classicButton" onClick={() => countPrice(selectedCar.dailyRate, pickUp, dropOff)}>Count price</button>}
+
+            {(selectedCar.id !== undefined && pickUp !== '' && dropOff !== '') &&
+                <button className="classicButton" onClick={() => handleClickOpen()}>Continue</button>
+            }
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Subscribe</DialogTitle>
+                <DialogContent>
+                    <DialogCarUserForm car={selectedCar}
+                                       selectedLocation={selectedLocation}
+                                       pickUp={pickUp}
+                                       dropOff={dropOff}
+                                       handleClose={handleCloseAfterSend}
+                    />
+
+                </DialogContent>
+            </Dialog>
+
+            <Snackbar open={toastOpen} autoHideDuration={6000} onClose={handleCloseToast} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                <Alert onClose={handleCloseToast} severity="success" sx={{width: '100%'}}>
+                    Your car rental has been successfully created. You will receive more information by email.
+                </Alert>
+            </Snackbar>
         </div>
     );
 
