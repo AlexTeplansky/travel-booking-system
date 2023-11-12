@@ -49,11 +49,11 @@
 /*INPUT DATE*/
 
 .input[type="date"]::-webkit-calendar-picker-indicator {
-    background: url(../Images/icons8-calendar-100.png) center/100% no-repeat;
+    background: url(../../Images/icons8-calendar-100.png) center/100% no-repeat;
 }
 
 .input[type="date"]::-webkit-calendar-picker-indicator:hover {
-    background: url(../Images/icons8-calendar-100.png) center/120% no-repeat;
+    background: url(../../Images/icons8-calendar-100.png) center/120% no-repeat;
     cursor: pointer;
 }
 
@@ -61,11 +61,11 @@
 
 
 .input[type="time"]::-webkit-calendar-picker-indicator {
-    background: url(../Images/icons8-clock-100.png) center/100% no-repeat;
+    background: url(../../Images/icons8-clock-100.png) center/100% no-repeat;
 }
 
 .input[type="time"]::-webkit-calendar-picker-indicator:hover {
-    background: url(../Images/icons8-clock-100.png) center/120% no-repeat;
+    background: url(../../Images/icons8-clock-100.png) center/120% no-repeat;
     cursor: pointer;
 }
 

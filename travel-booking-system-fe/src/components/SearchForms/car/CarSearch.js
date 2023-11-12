@@ -1,5 +1,5 @@
-import '../../App.css';
-import '../../Button.css';
+import '../../../App.css';
+import '../../../Button.css';
 import '../Form.css';
 import {useEffect, useState} from "react";
 import axios from "axios";

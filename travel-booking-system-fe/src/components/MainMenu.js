@@ -1,7 +1,7 @@
-import './App.css';
+import '../App.css';
 import {useState} from 'react';
 import {Routes, Route, Link} from "react-router-dom";
-import Home from "./Home";
+import Home from "../Home";
 import HotelSearch from "./SearchForms/HotelSearch";
 import CarSearch from "./SearchForms/car/CarSearch";
 import FlightSearch from "./SearchForms/FlightSearch";

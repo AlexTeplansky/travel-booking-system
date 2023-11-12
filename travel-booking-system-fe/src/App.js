@@ -1,9 +1,9 @@
 import './App.css';
 
-import CarSearchForm from "./SearchForms/car/CarSearch";
-import HotelSearch from "./SearchForms/HotelSearch";
-import FlightSearch from "./SearchForms/FlightSearch";
-import MainMenu from "./MainMenu";
+import CarSearchForm from "./components/SearchForms/car/CarSearch";
+import HotelSearch from "./components/SearchForms/HotelSearch";
+import FlightSearch from "./components/SearchForms/FlightSearch";
+import MainMenu from "./components/MainMenu";
 
 function App() {
   return (

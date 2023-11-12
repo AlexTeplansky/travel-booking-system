@@ -1,5 +1,5 @@
-import '../App.css';
-import '../Button.css';
+import '../../App.css';
+import '../../Button.css';
 import './Form.css';
 
 import NumberInput from "./NumberInput";
