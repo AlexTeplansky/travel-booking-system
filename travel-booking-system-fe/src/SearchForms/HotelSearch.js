@@ -7,7 +7,7 @@ import {useEffect, useRef} from 'react';
 import numberInput from "./NumberInput";
 
 
-function HotelSearchForm() {
+function HotelSearch() {
 
 
     function submitForm() {
@@ -59,4 +59,4 @@ function HotelSearchForm() {
     );
 }
 
-export default HotelSearchForm;
+export default HotelSearch;

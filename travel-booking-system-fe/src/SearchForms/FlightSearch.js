@@ -4,7 +4,7 @@ import './Form.css';
 
 import NumberInput from "./NumberInput";
 
-function FlightSearchForm() {
+function FlightSearch() {
 
     function submitForm() {
         //TODO:connect with backend
@@ -61,4 +61,4 @@ function FlightSearchForm() {
         </div>
     );
 }
-export default FlightSearchForm;
+export default FlightSearch;

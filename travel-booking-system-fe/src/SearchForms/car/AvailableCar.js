@@ -1,7 +1,10 @@
 
-export default function AvailableCar(car){
+import {useRef, useState} from "react";
+
+export default function AvailableCar({car, onSelect,  isSelected}){
+
     return(
-        <div className="bordered">
+        <div style={{backgroundColor: isSelected ? "#265426" : ""}} className="bordered">
             <div className="searchFormRow">
                 <div className="searchFormItem">
                     <label className="myLabelStyle">Brand: </label>
@@ -36,7 +39,7 @@ export default function AvailableCar(car){
             </div>
             <div className="searchFormRow">
                 <div className="searchFormItem">
-                    <button className="classicButton">Rent</button>
+                    <button id={car.id} className="classicButton" onClick={() => onSelect(car)}>Choose</button>
                 </div>
             </div>
         </div>

@@ -92,3 +92,14 @@
     text-align: left;
     color: #636B97;
 }
+
+.requiredLabel {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: #ff3030;
+    font-size: xx-small;
+}

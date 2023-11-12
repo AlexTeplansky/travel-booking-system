@@ -1,76 +1,65 @@
 import './App.css';
-
 import {useState} from 'react';
-
-import CarSearchForm from "./SearchForms/car/CarSearchForm";
-import HotelSearchForm from "./SearchForms/HotelSearchForm";
-import FlightSearchForm from "./SearchForms/FlightSearchForm";
+import {Routes, Route, Link} from "react-router-dom";
 import Home from "./Home";
+import HotelSearch from "./SearchForms/HotelSearch";
+import CarSearch from "./SearchForms/car/CarSearch";
+import FlightSearch from "./SearchForms/FlightSearch";
 
 function MainMenu() {
     const [showHome, setIsHome] = useState(true);
-    const [showStaysForm, setIsStaysFormShown] = useState(false);
-    const [showCarForm, setIsCarFormShown] = useState(false);
-    const [showFlightForm, setIsFlightFormShown] = useState(false);
+    const [showStays, setIsStaysShown] = useState(false);
+    const [showCar, setIsCarShown] = useState(false);
+    const [showFlight, setIsFlightShown] = useState(false);
 
     function setAllFalse() {
         setIsHome(false)
-        setIsStaysFormShown(false)
-        setIsCarFormShown(false)
-        setIsFlightFormShown(false)
+        setIsStaysShown(false)
+        setIsCarShown(false)
+        setIsFlightShown(false)
     }
 
-    const handleClickHome = event => {
+    const handleClickHome = () => {
         setAllFalse()
         setIsHome(true)
     }
 
-    const handleClickStay = event => {
+    const handleClickStay = () => {
         setAllFalse()
-        setIsStaysFormShown(true)
+        setIsStaysShown(true)
     }
-    const handleClickCar = event => {
+    const handleClickCar = () => {
         setAllFalse()
-        setIsCarFormShown(true)
+        setIsCarShown(true)
     }
-    const handleClickFlight = event => {
+    const handleClickFlight = () => {
         setAllFalse()
-        setIsFlightFormShown(true)
+        setIsFlightShown(true)
     }
 
     return (
         <>
+            <h1 className="header1">Travel Booking System</h1>
             <ul className="menu">
                 <li className="menuItem">
-                    <button className={showHome ? "active" : ""} onClick={handleClickHome}>Home</button>
+                    <Link to={"/"} style={{ textDecoration: 'none' }}><button className={showHome ? "active" : ""}  onClick={handleClickHome}>Home</button></Link>
                 </li>
                 <li className="menuItem">
-                    <button className={showStaysForm ? "active" : ""} onClick={handleClickStay}>Stays</button>
+                    <Link to={"/hotel"} style={{ textDecoration: 'none' }}><button className={showStays ? "active" : ""} onClick={handleClickStay}>Stays</button></Link>
                 </li>
                 <li className="menuItem">
-                    <button className={showCarForm ? "active" : ""} onClick={handleClickCar}>Car</button>
+                    <Link to={"/car"} style={{ textDecoration: 'none' }}><button className={showCar ? "active" : ""} onClick={handleClickCar}>Car</button></Link>
                 </li>
                 <li className="menuItem">
-                    <button className={showFlightForm ? "active" : ""} onClick={handleClickFlight}>Flight</button>
+                    <Link to={"/flight"} style={{ textDecoration: 'none' }}><button className={showFlight ? "active" : ""} onClick={handleClickFlight}>Flight</button></Link>
                 </li>
             </ul>
-
-            {showHome && (
-                <Home/>
-            )}
-
-            {showStaysForm && (
-                <HotelSearchForm/>
-            )}
-
-            {showCarForm && (
-                <CarSearchForm/>
-            )}
-
-            {showFlightForm && (
-                <FlightSearchForm/>
-            )}
-
+                <Routes>
+                    <Route exact path='/' element={<Home/>}></Route>
+                    <Route exact path='/hotel' element={<HotelSearch/>}></Route>
+                    <Route exact path='/car' element={<CarSearch/>}></Route>
+                    <Route exact path='/flight' element={<FlightSearch/>}></Route>
+                </Routes>
         </>
     );
 }

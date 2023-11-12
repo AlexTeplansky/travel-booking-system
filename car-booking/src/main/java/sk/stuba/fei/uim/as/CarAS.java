@@ -35,7 +35,7 @@ public class CarAS {
 
     public List<GetAvailableCarsDTO> getAvailableCarsSelectList(Integer locationId) {
         List<Car> availableCars = Car.find("available = ?1 and location.id = ?2", true, locationId).list();
-        return availableCars.stream().map(car -> new GetAvailableCarsDTO(car.getModel(), car.getBrand(), car.getYear(), car.getDailyRate())).toList();
+        return availableCars.stream().map(car -> new GetAvailableCarsDTO(car.getCarId(), car.getModel(), car.getBrand(), car.getYear(), car.getDailyRate())).toList();
     }
 
     @Transactional
