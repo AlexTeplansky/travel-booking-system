@@ -3,21 +3,25 @@ package sk.stuba.fei.uim.entity.dto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.bytebuddy.jar.asm.TypeReference;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class GetAvailableFlightsDTO {
 
-    private Date departureDate;
-    private Date arrivalDate;
+    private String departureDate;
+    private String arrivalDate;
     private String availableSeats ="{";
-    private Integer ticketPrice;
+    private String ticketPrice;
 
     public GetAvailableFlightsDTO(Date departureDate, Date arrivalDate, Object availableSeats, Integer ticketPrice){
-        this.departureDate = departureDate;
-        this.arrivalDate = arrivalDate;
-        this.ticketPrice = ticketPrice;
+
+        DateFormat dateFormat = new SimpleDateFormat("dd. MM. yyyy");
+        this.departureDate = dateFormat.format(departureDate);
+        this.arrivalDate = dateFormat.format(arrivalDate);
+        this.ticketPrice = String.valueOf(ticketPrice);
 
         Object[] objects = (Object[]) availableSeats;
         for(int i = 0; i<objects.length;i++){
@@ -29,21 +33,19 @@ public class GetAvailableFlightsDTO {
         }
     }
 
-
-
-    public Date getDepartureDate() {
+    public String getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(Date departureDate) {
+    public void setDepartureDate(String departureDate) {
         this.departureDate = departureDate;
     }
 
-    public Date getArrivalDate() {
+    public String getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(Date arrivalDate) {
+    public void setArrivalDate(String arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 
@@ -51,15 +53,15 @@ public class GetAvailableFlightsDTO {
         return availableSeats;
     }
 
-  public void setAvailableSeats(String availableSeats) {
+    public void setAvailableSeats(String availableSeats) {
         this.availableSeats = availableSeats;
     }
 
-    public Integer getTicketPrice() {
+    public String getTicketPrice() {
         return ticketPrice;
     }
 
-    public void setTicketPrice(Integer ticketPrice) {
+    public void setTicketPrice(String ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
 }
