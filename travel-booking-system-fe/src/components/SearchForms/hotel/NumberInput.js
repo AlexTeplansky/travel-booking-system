@@ -1,8 +1,8 @@
-import '../Button.css';
-import './Form.css';
+import '../../../Button.css';
+import '../../../style/Form.css';
 import {useRef} from "react";
 
-function NumberInput() {
+function NumberInput(props) {
     const numberInput = useRef(null);
 
     function decreaseNumber() {
@@ -25,7 +25,8 @@ function NumberInput() {
                 className="input"
                 type={"number"}
                 ref={numberInput}
-                value={0}
+                id={props.id}
+                defaultValue={0}
             />
             <button
                 className="inputNumberButton  increaseButton"
