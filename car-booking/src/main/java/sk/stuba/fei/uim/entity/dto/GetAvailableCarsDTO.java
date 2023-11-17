@@ -2,6 +2,7 @@ package sk.stuba.fei.uim.entity.dto;
 
 public class GetAvailableCarsDTO {
 
+    private Integer id;
     private String model;
     private String brand;
     private Integer year;
@@ -10,11 +11,20 @@ public class GetAvailableCarsDTO {
     public GetAvailableCarsDTO() {
     }
 
-    public GetAvailableCarsDTO(String model, String brand, Integer year, Integer dailyRate) {
+    public GetAvailableCarsDTO(Integer id, String model, String brand, Integer year, Integer dailyRate) {
+        this.id = id;
         this.model = model;
         this.brand = brand;
         this.year = year;
         this.dailyRate = dailyRate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getModel() {

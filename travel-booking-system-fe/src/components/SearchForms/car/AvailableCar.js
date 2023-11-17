@@ -1,7 +1,8 @@
 
-export default function AvailableCar(car){
+export default function AvailableCar({car, onSelect,  isSelected}){
+
     return(
-        <div className="bordered">
+        <div style={{backgroundColor: isSelected ? "#265426" : ""}} className="bordered">
             <div className="searchFormRow">
                 <div className="searchFormItem">
                     <label className="myLabelStyle">Brand: </label>
@@ -34,11 +35,13 @@ export default function AvailableCar(car){
                     <label className="myLabelStyle">{car.dailyRate}$</label>
                 </div>
             </div>
+            {onSelect !== undefined &&
             <div className="searchFormRow">
                 <div className="searchFormItem">
-                    <button className="classicButton">Rent</button>
+                    <button id={car.id} className="classicButton" onClick={() => onSelect(car)}>Choose</button>
                 </div>
             </div>
+            }
         </div>
     )
 }

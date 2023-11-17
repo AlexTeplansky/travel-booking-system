@@ -25,6 +25,19 @@
 /* * * * * * * * * INPUT TYPES * * * * * * * * */
 
 /*INPUT GENERAL*/
+.input[type="text"], .input[type="email"] {
+    width: 100%;
+    padding: 5px 10px;
+    margin: 1px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #d4d2d2;
+    color: #3F4365;
+
+}
+
 .input {
     box-sizing: border-box;
     width: 100%;
@@ -91,4 +104,31 @@
     font: inherit;
     text-align: left;
     color: #636B97;
+}
+
+.requiredLabel {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: #ff3030;
+    font-size: xx-small;
+}
+
+.detailLabel {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: #8898ea;
+    font-size: large;
+}
+
+.detailLabel:hover{
+    cursor: pointer;
+    color: #5b1a97;
 }
