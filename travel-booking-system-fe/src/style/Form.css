@@ -88,6 +88,33 @@
     color: #636B97;
 }
 
+.requiredLabel {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: #ff3030;
+    font-size: xx-small;
+}
+
+.detailLabel {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: #8898ea;
+    font-size: large;
+}
+
+.detailLabel:hover{
+    cursor: pointer;
+    color: #5b1a97;
+}
+
 .responseText{
     display: block;
     float: left;
@@ -97,3 +124,14 @@
     text-align: left;
     color: #a1aadc;
 }
+
+.itemSelected{
+    background: #272d44;
+    border: 3px solid #636B97;
+    border-radius : 0.2em
+}
+.itemNotSelected{
+    border: 1px solid #636B97;
+    border-radius : 0.2em
+}
+

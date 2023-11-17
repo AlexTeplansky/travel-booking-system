@@ -1,11 +1,12 @@
-import './App.css';
+import '../App.css';
 
 import {useState} from 'react';
 
-import CarSearchForm from "./SearchForms/CarSearchForm";
-import HotelSearchForm from "./SearchForms/HotelSearchForm";
-import FlightSearchForm from "./SearchForms/FlightSearchForm";
-import Home from "./Home";
+import CarSearchForm from "./SearchForms/car/CarSearchForm";
+import HotelSearchForm from "./SearchForms/hotel/HotelSearchForm";
+import FlightSearchForm from "./SearchForms/flight/FlightSearchForm";
+import Home from "../Home";
+import FlightSearch from "./SearchForms/flight/FlightSearch";
 
 function MainMenu() {
     const [showHome, setIsHome] = useState(true);
@@ -68,7 +69,7 @@ function MainMenu() {
             )}
 
             {showFlightForm && (
-                <FlightSearchForm/>
+                <FlightSearch/>
             )}
 
         </>

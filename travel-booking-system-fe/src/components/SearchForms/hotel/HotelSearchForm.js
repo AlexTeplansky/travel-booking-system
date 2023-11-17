@@ -1,10 +1,10 @@
-import '../App.css';
-import '../Button.css';
-import './Form.css';
+import '../../../App.css';
+import '../../../Button.css';
+import '../../../style/Form.css';
 
-import NumberInput from "./NumberInput";
+import NumberInput from "../NumberInput";
 import {useEffect, useRef} from 'react';
-import numberInput from "./NumberInput";
+import numberInput from "../NumberInput";
 
 
 function HotelSearchForm() {

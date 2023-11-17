@@ -1,6 +1,6 @@
-import '../App.css';
-import '../Button.css';
-import './Form.css';
+import '../../../App.css';
+import '../../../Button.css';
+import '../../../style/Form.css';
 
 function CarSearchForm() {
     return (

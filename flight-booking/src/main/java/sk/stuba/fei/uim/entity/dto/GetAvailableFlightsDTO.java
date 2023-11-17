@@ -10,14 +10,16 @@ import java.util.Date;
 import java.util.List;
 
 public class GetAvailableFlightsDTO {
+    private String id;
 
     private String departureDate;
     private String arrivalDate;
     private String availableSeats ="{";
     private String ticketPrice;
 
-    public GetAvailableFlightsDTO(Date departureDate, Date arrivalDate, Object availableSeats, Integer ticketPrice){
+    public GetAvailableFlightsDTO(Integer id ,Date departureDate, Date arrivalDate, Object availableSeats, Integer ticketPrice){
 
+        this.id = String.valueOf(id) ;
         DateFormat dateFormat = new SimpleDateFormat("dd. MM. yyyy");
         this.departureDate = dateFormat.format(departureDate);
         this.arrivalDate = dateFormat.format(arrivalDate);
@@ -63,5 +65,13 @@ public class GetAvailableFlightsDTO {
 
     public void setTicketPrice(String ticketPrice) {
         this.ticketPrice = ticketPrice;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

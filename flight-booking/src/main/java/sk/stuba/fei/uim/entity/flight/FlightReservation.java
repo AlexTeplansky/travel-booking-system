@@ -3,12 +3,14 @@ package sk.stuba.fei.uim.entity.flight;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "flight_reservation", schema = "public", catalog = "flight_db")
+@SequenceGenerator(name = "flightSequence", sequenceName = "flightsequence", allocationSize = 1, initialValue = 10)
 public class FlightReservation extends PanacheEntityBase {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "flightSequence",strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "reservation_id")
     private Integer reservationId;
@@ -23,7 +25,7 @@ public class FlightReservation extends PanacheEntityBase {
     private Integer seatNumber;
     @Basic
     @Column(name = "reservation_date")
-    private Date reservationDate;
+    private LocalDate reservationDate;
     @Basic
     @Column(name = "status")
     private String status;
@@ -63,11 +65,11 @@ public class FlightReservation extends PanacheEntityBase {
         this.seatNumber = seatNumber;
     }
 
-    public Date getReservationDate() {
+    public LocalDate getReservationDate() {
         return reservationDate;
     }
 
-    public void setReservationDate(Date reservationDate) {
+    public void setReservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
     }
 
@@ -109,7 +111,7 @@ public class FlightReservation extends PanacheEntityBase {
         return result;
     }
 
-   /* public Flight getFlightByFlightId() {
+  /* public Flight getFlightByFlightId() {
         return flightByFlightId;
     }
 
