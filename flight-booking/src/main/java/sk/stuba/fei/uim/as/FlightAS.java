@@ -2,7 +2,7 @@ package sk.stuba.fei.uim.as;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
-import sk.stuba.fei.uim.entity.Flight;
+import sk.stuba.fei.uim.entity.flight.Flight;
 
 @ApplicationScoped
 public class FlightAS {

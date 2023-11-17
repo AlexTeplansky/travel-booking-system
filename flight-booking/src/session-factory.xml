@@ -17,8 +17,8 @@
 
         <!-- Print executed SQL to stdout -->
         <property name="show_sql">true</property>
-        <mapping class="sk.stuba.fei.uim.entity.Airline"/>
-        <mapping class="sk.stuba.fei.uim.entity.Flight"/>
-        <mapping class="sk.stuba.fei.uim.entity.FlightReservation"/>
+        <mapping class="sk.stuba.fei.uim.entity.flight.Airline"/>
+        <mapping class="sk.stuba.fei.uim.entity.flight.Flight"/>
+        <mapping class="sk.stuba.fei.uim.entity.flight.FlightReservation"/>
     </session-factory>
 </hibernate-configuration>
