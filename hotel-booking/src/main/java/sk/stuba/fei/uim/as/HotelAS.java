@@ -6,6 +6,7 @@ import jakarta.ws.rs.NotFoundException;
 import sk.stuba.fei.uim.entity.customer.Customer;
 import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
 import sk.stuba.fei.uim.entity.dto.CreateRoomReservationDTO;
+import sk.stuba.fei.uim.entity.dto.GetAvailableRoomDTO;
 import sk.stuba.fei.uim.entity.dto.SelecItemDTO;
 import sk.stuba.fei.uim.entity.hotel.Hotel;
 import sk.stuba.fei.uim.entity.hotel.Room;
@@ -28,12 +29,12 @@ public class HotelAS {
 
     public List<SelecItemDTO> getHotelSelectList() {
         List<Hotel> hotels = Hotel.findAll().list();
-        return hotels.stream().map(l -> new SelecItemDTO(l.getCity(), l.getCity() + ", " + l.getAddress())).toList();
+        return hotels.stream().map(l -> new SelecItemDTO(l.getHotelId().toString(), l.getCity() + ", " + l.getAddress())).toList();
     }
 
-    public List<SelecItemDTO> getAvailableRoomsSelectList(Integer hotelId) {
+    public List<GetAvailableRoomDTO> getAvailableRoomsSelectList(Integer hotelId, Integer persons, Integer roomNum) {
         List<Room> availableRooms = Room.find("available = ?1 and hotel.id = ?2", true, hotelId).list();
-        return availableRooms.stream().map(room -> new SelecItemDTO(room.getRoomId().toString(), room.getHotel().getHotelId() + " " + room.getRoomType() + " " + room.getCapacity())).toList();
+        return availableRooms.stream().map(room -> new GetAvailableRoomDTO(room.getRoomId(), room.getRoomType(), room.getCapacity(), room.getPrice())).toList();
     }
 
     @Transactional
@@ -62,7 +63,7 @@ public class HotelAS {
 
         // Vypocitame vyslednu cenu
         Integer days = roomReservation.getDateOut().compareTo(roomReservation.getDateIn());
-        roomReservation.setPrice((double) (days * room.getDailyRate()));
+        roomReservation.setPrice((double) (days * room.getPrice()));
 
         // Ulozime do DB
         roomReservation.persist();

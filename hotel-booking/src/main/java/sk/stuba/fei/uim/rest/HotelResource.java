@@ -8,6 +8,9 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import sk.stuba.fei.uim.as.HotelAS;
 import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
 import sk.stuba.fei.uim.entity.dto.CreateRoomReservationDTO;
+import sk.stuba.fei.uim.entity.dto.GetAvailableRoomDTO;
+
+import java.util.List;
 
 @Path("/api/hotel")
 
@@ -39,7 +42,14 @@ public class HotelResource {
             summary = "Get available rooms.",
             description = "Get available rooms at specific hotel for Select component."
     )
-    public Response getAvailableCars(@PathParam("hotelId") Integer hotelId) {return Response.ok(hotelAS.getAvailableRoomsSelectList(hotelId)).build();}
+    public Response getAvailableCars(@PathParam("hotelId") Integer hotelId,
+                                     @QueryParam("adult") Integer adult,
+                                     @QueryParam("children") Integer children,
+                                     @QueryParam("room") Integer room
+    ) {
+        Integer persons = adult + children;
+        return Response.ok(hotelAS.getAvailableRoomsSelectList(hotelId, persons, room)).build();
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
