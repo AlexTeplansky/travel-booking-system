@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 import sk.stuba.fei.uim.as.FlightAS;
 import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
 import sk.stuba.fei.uim.entity.dto.CreateFlightRentalDTO;
+import sk.stuba.fei.uim.entity.dto.SearchAvailableFlightDTO;
 
 @Path("/api/flight")
 @ApplicationScoped
@@ -31,20 +32,21 @@ public class FlightResource {
         return Response.ok(flightAS.getFlightLocations()).build();
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/availableFlights/{origin}&{destination}")
-    public Response getAvailableFlights(@PathParam("origin") String origin,@PathParam("destination") String destination){
-        return Response.ok(flightAS.getAvailableFlights(origin,destination)).build();
-    }
 
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/availableFlights")
+    public Response getAvailableFlights(SearchAvailableFlightDTO searchAvailableFlightDTO) {
+        return Response.ok(flightAS.getAvailableFlights(searchAvailableFlightDTO)).build();
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/rent")
-    public Response createFlightRental(CreateFlightRentalDTO createFlightRentalDTO) throws Exception{
-       flightAS.createFlightRental(createFlightRentalDTO);
+    public Response createFlightRental(CreateFlightRentalDTO createFlightRentalDTO) throws Exception {
+        flightAS.createFlightRental(createFlightRentalDTO);
         return Response.ok().build();
     }
 

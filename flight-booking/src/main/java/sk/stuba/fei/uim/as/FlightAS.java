@@ -6,10 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import sk.stuba.fei.uim.entity.customer.Customer;
-import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
-import sk.stuba.fei.uim.entity.dto.CreateFlightRentalDTO;
-import sk.stuba.fei.uim.entity.dto.GetAvailableFlightsDTO;
-import sk.stuba.fei.uim.entity.dto.SelecItemDTO;
+import sk.stuba.fei.uim.entity.dto.*;
 import sk.stuba.fei.uim.entity.flight.Flight;
 import sk.stuba.fei.uim.entity.flight.FlightReservation;
 
@@ -56,9 +53,25 @@ public class FlightAS {
         return locations.stream().map(l -> new SelecItemDTO(l, l)).toList();
     }
 
-    public List<GetAvailableFlightsDTO> getAvailableFlights(String origin, String destination) {
-        List<Flight> flights = Flight.find("origin = ?1 and destination = ?2", origin, destination).list();
-        return flights.stream().map(f -> new GetAvailableFlightsDTO(f.getFlightId(), f.getDepartureDate(), f.getArrivalDate(), f.getAvailableSeats(), f.getTicketPrice())).toList();
+
+    public List<GetAvailableFlightsDTO> getAvailableFlights(SearchAvailableFlightDTO searchAvailableFlightDTO) {
+        List<Flight> flights =
+                Flight.find(
+                        "origin = ?1 and destination = ?2",
+                        searchAvailableFlightDTO.getOrigin(),
+                        searchAvailableFlightDTO.getDestination()).list();
+
+        List<Flight> availableFlights = new ArrayList<>();
+        for (Flight flight : flights) {
+
+            //check available seats
+            Object[] seats = ((Object[]) flight.getAvailableSeats());
+
+            if (seats.length >= searchAvailableFlightDTO.getNumberOfPassengers()) {
+                availableFlights.add(flight);
+            }
+        }
+        return availableFlights.stream().map(f -> new GetAvailableFlightsDTO(f.getFlightId(), f.getDepartureDate(), f.getArrivalDate(), f.getAvailableSeats(), f.getTicketPrice())).toList();
     }
 
 
