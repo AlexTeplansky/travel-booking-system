@@ -32,8 +32,8 @@ public class HotelAS {
         return hotels.stream().map(l -> new SelecItemDTO(l.getHotelId().toString(), l.getCity() + ", " + l.getAddress())).toList();
     }
 
-    public List<GetAvailableRoomDTO> getAvailableRoomsSelectList(Integer hotelId, Integer persons, Integer roomNum) {
-        List<Room> availableRooms = Room.find("available = ?1 and hotel.id = ?2", true, hotelId).list();
+    public List<GetAvailableRoomDTO> getAvailableRoomsSelectList(Integer hotelId, Integer persons) {
+        List<Room> availableRooms = Room.find("available = ?1 and hotel.id = ?2 and capacity >= ?3", true, hotelId, persons).list();
         return availableRooms.stream().map(room -> new GetAvailableRoomDTO(room.getRoomId(), room.getRoomType(), room.getCapacity(), room.getPrice())).toList();
     }
 

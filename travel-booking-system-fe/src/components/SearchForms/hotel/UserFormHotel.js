@@ -1,7 +1,6 @@
 import axios from "axios";
 
-
-function UserForm({car, pickUp, dropOff, handleClose}) {
+function UserFormHotel({room, checkIn, checkOut, handleClose}) {
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -12,18 +11,20 @@ function UserForm({car, pickUp, dropOff, handleClose}) {
             idCard: e.target[3].value
         }
 
-        axios.post("http://localhost:8701/api/car/customer", userData).then(res => {
-            const rentData = {
-                userId: res.data,
-                carId: car.id,
-                driverName: userData.firstName + " " + userData.lastName,
-                pickupDate: pickUp,
-                returnDate: dropOff,
-                status: "Active"
-            }
-            axios.post("http://localhost:8701/api/car/rent", rentData).then(res => console.log(res))
-            handleClose(false)
-        })
+        console.log(userData)
+
+        // axios.post("http://localhost:8701/api/hotel/customer", userData).then(res => {
+        //     const rentData = {
+        //         userId: res.data,
+        //         carId: car.id,
+        //         driverName: userData.firstName + " " + userData.lastName,
+        //         pickupDate: pickUp,
+        //         returnDate: dropOff,
+        //         status: "Active"
+        //     }
+        //     axios.post("http://localhost:8701/api/car/rent", rentData).then(res => console.log(res))
+        //     handleClose(false)
+        // })
     }
 
     return (
@@ -53,12 +54,12 @@ function UserForm({car, pickUp, dropOff, handleClose}) {
                 </div>
             </div>
             <div className="searchFormRow">
-                    <button className="classicButton" type="submit" >Send car rental</button>
+                <button className="classicButton" type="submit" >Send car rental</button>
             </div>
 
 
         </form>
-)
+    )
 }
 
-export default UserForm
+export default UserFormHotel

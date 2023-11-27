@@ -10,7 +10,6 @@ function HotelSearch({hotels, handleChangeSelectedHotel, checkIn, checkOut, setC
 
     return (
         <div className="form">
-            <h2 className="header2">Stays</h2>
             <div>
                 <div className="searchFormRow">
                     <div className="searchFormItem">
@@ -51,10 +50,6 @@ function HotelSearch({hotels, handleChangeSelectedHotel, checkIn, checkOut, setC
                     <div className="searchFormItem">
                         <label className="myLabelStyle">Children</label>
                         <NumberInput id="NumOfChildren" setNumber={setChildren}/>
-                    </div>
-                    <div className="searchFormItem" id="RoomDiv">
-                        <label className="myLabelStyle">Rooms</label>
-                        <NumberInput id="NumOfRooms"  setNumber={setRoom}/>
                     </div>
                 </div>
             </div>

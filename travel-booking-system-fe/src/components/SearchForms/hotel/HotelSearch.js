@@ -6,6 +6,10 @@ import NumberInput from "./NumberInput";
 import HotelSearchForm from "./HotelSearchForm";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import AvailableRoom from "./AvailableRoom";
+import {Alert, Dialog, DialogContent, DialogTitle, Snackbar} from "@mui/material";
+import DialogCarUserForm from "../car/DialogCarUserForm";
+import DialogHotelUserForm from "./DialogHotelUserForm";
 
 
 
@@ -15,7 +19,7 @@ function HotelSearch() {
     const [selectedHotel, setSelectedHotel] = useState(undefined)
 
     const [availableRooms, setAvailableRooms] = useState([])
-    const [selectedRoom, setSelectedRoom] = useState(undefined)
+    const [selectedRoom, setSelectedRoom] = useState({})
 
     const [checkIn, setCheckIn] = useState('')
     const [checkOut, setCheckOut] = useState('')
@@ -35,16 +39,46 @@ function HotelSearch() {
         setSelectedHotel(selectedHotelArray[0])
     }
 
+    function handleSelectRoom(room){
+        if(room !== {}) {
+            const newSelectedRoom = selectedRoom.id === room.id ? {} : room
+            setSelectedRoom(newSelectedRoom)
+        }
+    }
+
     function submitForm() {
-        let queryParam = `?room=${room}`
-        if(adult > 0)
-            queryParam += `&adult=${adult}`
-        if(children > 0)
+        let queryParam = "?"
+        if(adult !== null)
+            queryParam += `adult=${adult}`
+        if(children !== null)
             queryParam += `&children=${children}`
         axios.get(`http://localhost:8702/api/hotel/availableRooms/` + selectedHotel.key + queryParam).then(res => {
             setAvailableRooms(res.data)
         })
     }
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleCloseToast = () => {
+        setToastOpen(false);
+    };
+
+    const handleCloseAfterSend = () => {
+        setCheckIn('')
+        setCheckOut('')
+        setAvailableRooms([])
+        setSelectedRoom({})
+        setSelectedHotel({})
+        setToastOpen(true)
+        handleClose()
+    };
+
 
     useEffect(() => {
         axios.get("http://localhost:8702/api/hotel/hotels").then(res =>{
@@ -75,6 +109,42 @@ function HotelSearch() {
             {checkIn !== '' && checkOut !== '' &&
                 <button className="classicButton" onClick={submitForm}>Search</button>
             }
+
+            {availableRooms.map(room => {
+                return (
+                    <AvailableRoom
+                        key={room.id}
+                        room={room}
+                        isSelected={selectedRoom.id === room.id}
+                        onSelect={handleSelectRoom}
+                    />
+                )
+            })}
+
+            {(selectedRoom.id !== undefined && checkIn !== '' && checkOut !== '') &&
+                <button className="classicButton" onClick={() => handleClickOpen()}>Continue</button>
+            }
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Customer information</DialogTitle>
+                <DialogContent>
+                    <DialogHotelUserForm room={selectedRoom}
+                                       selectedHotel={selectedHotel}
+                                       checkIn={checkIn}
+                                       checkOut={checkOut}
+                                       handleClose={handleCloseAfterSend}
+                                         adults={adult}
+                                     childrens={children}
+                    />
+
+                </DialogContent>
+            </Dialog>
+
+            <Snackbar open={toastOpen} autoHideDuration={6000} onClose={handleCloseToast} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                <Alert onClose={handleCloseToast} severity="success" sx={{width: '100%'}}>
+                    Your room rental has been successfully created. You will receive more information by email.
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

@@ -44,11 +44,10 @@ public class HotelResource {
     )
     public Response getAvailableCars(@PathParam("hotelId") Integer hotelId,
                                      @QueryParam("adult") Integer adult,
-                                     @QueryParam("children") Integer children,
-                                     @QueryParam("room") Integer room
+                                     @QueryParam("children") Integer children
     ) {
         Integer persons = adult + children;
-        return Response.ok(hotelAS.getAvailableRoomsSelectList(hotelId, persons, room)).build();
+        return Response.ok(hotelAS.getAvailableRoomsSelectList(hotelId, persons)).build();
     }
 
     @POST
