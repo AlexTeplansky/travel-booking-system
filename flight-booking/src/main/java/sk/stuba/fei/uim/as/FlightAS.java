@@ -1,8 +1,6 @@
 package sk.stuba.fei.uim.as;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.ObserverException;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import sk.stuba.fei.uim.entity.customer.Customer;
@@ -10,12 +8,10 @@ import sk.stuba.fei.uim.entity.dto.*;
 import sk.stuba.fei.uim.entity.flight.Flight;
 import sk.stuba.fei.uim.entity.flight.FlightReservation;
 
-
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 @ApplicationScoped
 public class FlightAS {
@@ -62,16 +58,24 @@ public class FlightAS {
                         searchAvailableFlightDTO.getDestination()).list();
 
         List<Flight> availableFlights = new ArrayList<>();
+
+        //check the number of available seats
         for (Flight flight : flights) {
 
-            //check available seats
             Object[] seats = ((Object[]) flight.getAvailableSeats());
-
-            if (seats.length >= searchAvailableFlightDTO.getNumberOfPassengers()) {
+            int numberOfAvailableSeats = 0;
+            for (int i = 0; i < seats.length; i++) {
+                FlightReservation existingReservation =
+                        FlightReservation.find("seatNumber = ?1 and flightId = ?2", seats[i], flight.getFlightId()).firstResult();
+                if (existingReservation == null) {
+                    numberOfAvailableSeats+=1;
+                }
+            }
+            if(numberOfAvailableSeats>= searchAvailableFlightDTO.getNumberOfPassengers()){
                 availableFlights.add(flight);
             }
         }
-        return availableFlights.stream().map(f -> new GetAvailableFlightsDTO(f.getFlightId(), f.getDepartureDate(), f.getArrivalDate(), f.getAvailableSeats(), f.getTicketPrice())).toList();
+        return availableFlights.stream().map(f -> new GetAvailableFlightsDTO(f.getFlightId(), f.getDepartureDate(), f.getArrivalDate(), f.getTicketPrice())).toList();
     }
 
 
@@ -85,26 +89,27 @@ public class FlightAS {
 
         //check available seats
         Object[] seats = ((Object[]) flight.getAvailableSeats());
-        Object freeSeat = null;
+        Object reservedSeat =seats[0];
 
         for (int i = 0; i < seats.length; i++) {
+
             FlightReservation existingReservation =
                     FlightReservation.find("seatNumber = ?1 and flightId = ?2", seats[i], createFlightRentalDTO.getFlightId()).firstResult();
 
             if (existingReservation == null) {
-                freeSeat = seats[i];
+                reservedSeat = seats[i];
                 break;
             }
         }
-        if (freeSeat == null)
+        if(reservedSeat == null){
             throw new Exception("All seats are taken");
-
+        }
 
         FlightReservation flightReservation = new FlightReservation();
 
         flightReservation.setUserId(createFlightRentalDTO.getUserId());
         flightReservation.setFlightId(createFlightRentalDTO.getFlightId());
-        flightReservation.setSeatNumber((Integer) freeSeat);
+        flightReservation.setSeatNumber((Integer) reservedSeat);
         flightReservation.setReservationDate(LocalDate.now());
         flightReservation.setStatus(createFlightRentalDTO.getStatus());
 

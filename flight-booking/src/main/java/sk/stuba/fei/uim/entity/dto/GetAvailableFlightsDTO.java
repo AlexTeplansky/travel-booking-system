@@ -14,10 +14,9 @@ public class GetAvailableFlightsDTO {
 
     private String departureDate;
     private String arrivalDate;
-    private String availableSeats ="{";
     private String ticketPrice;
 
-    public GetAvailableFlightsDTO(Integer id ,Date departureDate, Date arrivalDate, Object availableSeats, Integer ticketPrice){
+    public GetAvailableFlightsDTO(Integer id ,Date departureDate, Date arrivalDate, Integer ticketPrice){
 
         this.id = String.valueOf(id) ;
         DateFormat dateFormat = new SimpleDateFormat("dd. MM. yyyy");
@@ -25,14 +24,8 @@ public class GetAvailableFlightsDTO {
         this.arrivalDate = dateFormat.format(arrivalDate);
         this.ticketPrice = String.valueOf(ticketPrice);
 
-        Object[] objects = (Object[]) availableSeats;
-        for(int i = 0; i<objects.length;i++){
-            if(i< objects.length-1){
-                this.availableSeats+=objects[i]+", ";
-            }else {
-                this.availableSeats+=objects[i]+"}";
-            }
-        }
+
+
     }
 
     public String getDepartureDate() {
@@ -49,14 +42,6 @@ public class GetAvailableFlightsDTO {
 
     public void setArrivalDate(String arrivalDate) {
         this.arrivalDate = arrivalDate;
-    }
-
-    public String getAvailableSeats() {
-        return availableSeats;
-    }
-
-    public void setAvailableSeats(String availableSeats) {
-        this.availableSeats = availableSeats;
     }
 
     public String getTicketPrice() {

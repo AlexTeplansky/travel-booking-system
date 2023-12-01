@@ -21,7 +21,7 @@ function FlightSearch() {
     const [locations, setLocations] = useState([])
     const [selectedOrigin, setSelectedOrigin] = useState(undefined)
     const [selectedDestination, setSelectedDestination] = useState(undefined)
-    const [numOfAdults, setNumOfAdults] = useState(undefined)
+    const [numOfPassengers, setNumOfPassengers] = useState(0)
 
     const [departureDate, setDepartureDate] = useState('')
     const [returnDate, setReturnDate] = useState('')
@@ -55,6 +55,10 @@ function FlightSearch() {
         setSelectedFlight({})
 
         setToastOpen(true)
+
+        document.getElementById("NumOfAdults").value = 1
+        document.getElementById("NumOfChildren").value = 0
+        document.getElementById("NumOfInfants").value = 0
         handleClose()
     };
 
@@ -88,7 +92,8 @@ function FlightSearch() {
         let adults = parseInt(document.getElementById("NumOfAdults").value)
         let children = parseInt(document.getElementById("NumOfChildren").value)
         let infants = parseInt(document.getElementById("NumOfInfants").value)
-        return (adults + children + infants)
+        setNumOfPassengers(adults + children + infants)
+        return adults + children + infants
     }
 
     function handleSelectFlight(flight) {
@@ -99,6 +104,8 @@ function FlightSearch() {
     }
 
     function submitForm() {
+
+        getNumberOfPassengers()
 
         const searchData = {
             origin: selectedOrigin.key,
@@ -155,6 +162,7 @@ function FlightSearch() {
                                           destination={selectedDestination}
                                           departureDate={departureDate}
                                           returnDate={returnDate}
+                                          numOfPassengers={numOfPassengers}
                                           handleClose={handleCloseAfterSend}
                     />
 

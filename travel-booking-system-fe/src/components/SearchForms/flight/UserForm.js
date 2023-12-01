@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-function UserForm({flight, handleClose}) {
+function UserForm({flight, numOfPassengers, handleClose}) {
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -13,11 +13,11 @@ function UserForm({flight, handleClose}) {
         }
 
         axios.post("http://localhost:8703/api/flight/customer", userData).then(res => {
-            console.log("createdUser "+ res.data)
             const rentData = {
                 userId: res.data,
                 flightId: flight.id,
                 passengerName: userData.firstName +" " + userData.lastName,
+                numberOfPassengers: numOfPassengers,
                 status: "Confirmed"
             }
             axios.post("http://localhost:8703/api/flight/rent", rentData).then(res => console.log("return " + res))

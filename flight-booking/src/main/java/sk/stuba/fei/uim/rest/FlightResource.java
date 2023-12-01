@@ -46,7 +46,11 @@ public class FlightResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/rent")
     public Response createFlightRental(CreateFlightRentalDTO createFlightRentalDTO) throws Exception {
-        flightAS.createFlightRental(createFlightRentalDTO);
+
+        int numOfRentals = createFlightRentalDTO.getNumberOfPassengers();
+        for (int i =0 ; i < numOfRentals;i++){
+            flightAS.createFlightRental(createFlightRentalDTO);
+        }
         return Response.ok().build();
     }
 
