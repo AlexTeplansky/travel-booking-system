@@ -2,13 +2,11 @@ import '../../../App.css';
 import '../../../Button.css';
 import '../../../style/Form.css';
 
-import NumberInput from "./NumberInput";
 import HotelSearchForm from "./HotelSearchForm";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import AvailableRoom from "./AvailableRoom";
 import {Alert, Dialog, DialogContent, DialogTitle, Snackbar} from "@mui/material";
-import DialogCarUserForm from "../car/DialogCarUserForm";
 import DialogHotelUserForm from "./DialogHotelUserForm";
 
 
@@ -74,7 +72,7 @@ function HotelSearch() {
         setCheckOut('')
         setAvailableRooms([])
         setSelectedRoom({})
-        setSelectedHotel({})
+        setSelectedHotel(hotels[0])
         setToastOpen(true)
         handleClose()
     };
@@ -106,7 +104,7 @@ function HotelSearch() {
                 setChildren={setChildren}
             />
 
-            {checkIn !== '' && checkOut !== '' &&
+            {checkIn !== '' && checkOut !== '' && checkOut >= checkIn && adult > 0 &&
                 <button className="classicButton" onClick={submitForm}>Search</button>
             }
 
@@ -129,12 +127,12 @@ function HotelSearch() {
                 <DialogTitle>Customer information</DialogTitle>
                 <DialogContent>
                     <DialogHotelUserForm room={selectedRoom}
-                                       selectedHotel={selectedHotel}
-                                       checkIn={checkIn}
-                                       checkOut={checkOut}
-                                       handleClose={handleCloseAfterSend}
+                                         selectedHotel={selectedHotel}
+                                         checkIn={checkIn}
+                                         checkOut={checkOut}
+                                         handleClose={handleCloseAfterSend}
                                          adults={adult}
-                                     childrens={children}
+                                         childrens={children}
                     />
 
                 </DialogContent>

@@ -76,12 +76,20 @@ public class CarAS {
          * Ak uz je v DB zaznam s danym idCard (predpokladame ze idCard ako OP alebo pas su jedinecne pre cloveka),
          * znamena to ze uzivatel uz je v databaze a mozme pracovat s tymto zaznamoma netreba nam vytvarat novy zaznam.
          * Inak vytvorime novy a pracujeme s nim.
-         *
+
          * Vraciame Id uzivatela.
          * */
         Customer existingCustomer = Customer.find("idCard = ?1", createCustomerDTO.getIdCard()).firstResult();
-        if(existingCustomer != null)
+        if(existingCustomer != null
+                && createCustomerDTO.getFirstName().equals(existingCustomer.getFirstName())
+                && existingCustomer.getLastName().equals(createCustomerDTO.getLastName())
+        )
             return existingCustomer.getCustomerId();
+        else if(existingCustomer != null
+                && (!createCustomerDTO.getFirstName().equals(existingCustomer.getFirstName())
+                || !existingCustomer.getLastName().equals(createCustomerDTO.getLastName()))
+        )
+            return null;
 
         Customer customer = new Customer();
         customer.setEmail(createCustomerDTO.getEmail());

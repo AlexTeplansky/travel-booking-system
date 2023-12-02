@@ -70,7 +70,7 @@ public class HotelAS {
     }
 
     @Transactional
-    public Integer createCustomer(CreateCustomerDTO createCustomerDTO) {
+    public Integer createCustomer(CreateCustomerDTO createCustomerDTO) throws Exception {
 
         /**
          * Ak uz je v DB zaznam s danym idCard (predpokladame ze idCard ako OP alebo pas su jedinecne pre cloveka),
@@ -79,9 +79,19 @@ public class HotelAS {
          *
          * Vraciame Id uzivatela.
          * */
+
+
         Customer existingCustomer = Customer.find("idCard = ?1", createCustomerDTO.getIdCard()).firstResult();
-        if(existingCustomer != null)
+        if(existingCustomer != null
+                && createCustomerDTO.getFirstName().equals(existingCustomer.getFirstName())
+                && existingCustomer.getLastName().equals(createCustomerDTO.getLastName())
+        )
             return existingCustomer.getCustomerId();
+        else if(existingCustomer != null
+                && (!createCustomerDTO.getFirstName().equals(existingCustomer.getFirstName())
+                || !existingCustomer.getLastName().equals(createCustomerDTO.getLastName()))
+        )
+            return null;
 
         Customer customer = new Customer();
         customer.setEmail(createCustomerDTO.getEmail());

@@ -37,7 +37,7 @@ function HotelSearch({hotels, handleChangeSelectedHotel, checkIn, checkOut, setC
                         <label className="myLabelStyle">Check-out date</label>
                         <input className="input" value={checkOut} type={"date"} onChange={(e) => setCheckOut(e.target.value)}/>
                         {checkOut === '' && <label className="requiredLabel">*You must select check-out date</label>}
-
+                        {checkOut < checkIn && <label className="requiredLabel">*Not allowed date for checkOut</label>}
                     </div>
                 </div>
 

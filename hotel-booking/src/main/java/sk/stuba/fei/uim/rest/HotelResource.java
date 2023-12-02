@@ -71,7 +71,7 @@ public class HotelResource {
             summary = "Create customer.",
             description = "Create a new customer to DB if there is no existing one."
     )
-    public Response createUser(CreateCustomerDTO createCustomerDTO) {
+    public Response createUser(CreateCustomerDTO createCustomerDTO) throws Exception {
         return Response.ok(hotelAS.createCustomer(createCustomerDTO)).build();
     }
 
