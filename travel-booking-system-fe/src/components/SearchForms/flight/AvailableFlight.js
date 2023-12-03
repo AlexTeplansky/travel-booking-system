@@ -6,7 +6,7 @@ function AvailableFlight({flight, onSelect, isSelected}) {
 
 
     return (
-        <div className={isSelected ? "itemSelected" : "itemNotSelected"}>
+        <div style={{backgroundColor: isSelected ? "#265426" : ""}}>
             <div className="searchFormRow">
                 <div className="searchFormItem">
                     <label className="responseText">Departure date: </label>

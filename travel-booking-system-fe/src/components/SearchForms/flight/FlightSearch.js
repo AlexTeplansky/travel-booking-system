@@ -155,7 +155,7 @@ function FlightSearch() {
             }
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle style={{background: "#21283a", color: "white"}}>Subscribe</DialogTitle>
+                <DialogTitle style={{background: "#21283a", color: "white"}}>Customer information</DialogTitle>
                 <DialogContent style={{background: "#272d44"}}>
                     <DialogFlightUserForm flight={selectedFlight}
                                           origin={selectedOrigin}
