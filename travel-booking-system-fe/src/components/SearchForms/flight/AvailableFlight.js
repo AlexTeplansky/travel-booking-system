@@ -1,10 +1,6 @@
 import '../../../App.css';
 import '../../../Button.css';
 import '../../../style/Form.css';
-import axios from "axios"
-
-import NumberInput from "../NumberInput";
-import {useEffect, useState} from "react";
 
 function AvailableFlight({flight, onSelect, isSelected}) {
 

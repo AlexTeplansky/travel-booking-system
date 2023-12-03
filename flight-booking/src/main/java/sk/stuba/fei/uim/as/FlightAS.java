@@ -64,11 +64,11 @@ public class FlightAS {
 
             Object[] seats = ((Object[]) flight.getAvailableSeats());
             int numberOfAvailableSeats = 0;
-            for (int i = 0; i < seats.length; i++) {
+            for (Object seat : seats) {
                 FlightReservation existingReservation =
-                        FlightReservation.find("seatNumber = ?1 and flightId = ?2", seats[i], flight.getFlightId()).firstResult();
+                        FlightReservation.find("seatNumber = ?1 and flightId = ?2", seat, flight.getFlightId()).firstResult();
                 if (existingReservation == null) {
-                    numberOfAvailableSeats+=1;
+                    numberOfAvailableSeats += 1;
                 }
             }
             if(numberOfAvailableSeats>= searchAvailableFlightDTO.getNumberOfPassengers()){
@@ -91,13 +91,13 @@ public class FlightAS {
         Object[] seats = ((Object[]) flight.getAvailableSeats());
         Object reservedSeat =seats[0];
 
-        for (int i = 0; i < seats.length; i++) {
+        for (Object seat : seats) {
 
             FlightReservation existingReservation =
-                    FlightReservation.find("seatNumber = ?1 and flightId = ?2", seats[i], createFlightRentalDTO.getFlightId()).firstResult();
+                    FlightReservation.find("seatNumber = ?1 and flightId = ?2", seat, createFlightRentalDTO.getFlightId()).firstResult();
 
             if (existingReservation == null) {
-                reservedSeat = seats[i];
+                reservedSeat = seat;
                 break;
             }
         }
