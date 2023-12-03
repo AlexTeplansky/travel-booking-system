@@ -1,6 +1,9 @@
 package sk.stuba.fei.uim.as;
 
+import io.quarkus.mailer.Mail;
+import io.quarkus.mailer.Mailer;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import sk.stuba.fei.uim.entity.customer.Customer;
@@ -16,6 +19,8 @@ import java.util.List;
 @ApplicationScoped
 public class FlightAS {
 
+    @Inject
+    Mailer mailer;
     public Flight getFlightDetail(Integer id) {
         Flight flight = Flight.findById(id);
         if (flight == null)
@@ -81,8 +86,10 @@ public class FlightAS {
 
     @Transactional
     public void createFlightRental(CreateFlightRentalDTO createFlightRentalDTO) throws Exception {
+
+        Customer customer = Customer.findById(createFlightRentalDTO.getUserId());
         //Check if user exists
-        if (Customer.findById(createFlightRentalDTO.getUserId()) == null)
+        if (customer == null)
             throw new NotFoundException("User not found.");
 
         Flight flight = Flight.findById(createFlightRentalDTO.getFlightId());
@@ -114,6 +121,22 @@ public class FlightAS {
         flightReservation.setStatus(createFlightRentalDTO.getStatus());
 
         flightReservation.persist();
+
+        Mail mail = Mail.withText(customer.getEmail(),
+                "Car rent confirmation.",
+                (String.format("""
+                                Your flight reservation has been successfully created.
+
+                                You will flight from %s to %s at %s.
+
+                                We appreciate your interest and wish you a happy flight.
+                                Alex, Noemi, Daniel, Jozef, Matúš""",
+                        flight.getOrigin(),
+                        flight.getDestination(),
+                        flight.getDepartureDate()))
+        );
+
+        mailer.send(mail);
     }
 
     @Transactional

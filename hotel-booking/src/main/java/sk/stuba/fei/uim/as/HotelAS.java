@@ -1,6 +1,9 @@
 package sk.stuba.fei.uim.as;
 
+import io.quarkus.mailer.Mail;
+import io.quarkus.mailer.Mailer;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import sk.stuba.fei.uim.entity.customer.Customer;
@@ -18,6 +21,10 @@ import java.util.List;
 
 @ApplicationScoped
 public class HotelAS {
+
+    @Inject
+    Mailer mailer;
+
     public Hotel getHotelId(Integer id) {
         Hotel hotel = Hotel.findById(id);
         if(hotel == null)
@@ -40,8 +47,10 @@ public class HotelAS {
     @Transactional
     public void createRoomReservation(CreateRoomReservationDTO createRoomReservationDTO) throws Exception {
 
+
+        Customer customer = Customer.findById(createRoomReservationDTO.getUserId());
         // Skontrolujeme ci existuje zakaznik (pre istotu), skontrolujeme ci je zvolene auto dostupne (pre istotu)
-        if(Customer.findById(createRoomReservationDTO.getUserId()) == null)
+        if(customer == null)
             throw new NotFoundException("Zákazník sa nenašiel.");
         Room room = Room.findById(createRoomReservationDTO.getRoomId());
         if(!room.getAvailable())
@@ -67,6 +76,21 @@ public class HotelAS {
 
         // Ulozime do DB
         roomReservation.persist();
+
+        Mail mail = Mail.withText(customer.getEmail(),
+                "Car rent confirmation.",
+                (String.format("""
+                                Your room reservation has been successfully created.
+
+                                You will stay in %s at %s.
+
+                                We appreciate your interest and wish you a happy flight.
+                                Alex, Noemi, Daniel, Jozef, Matúš""",
+                        room.getHotel().getAddress() + " " + room.getHotel().getCity(),
+                        roomReservation.getDateIn()))
+        );
+
+        mailer.send(mail);
     }
 
     @Transactional

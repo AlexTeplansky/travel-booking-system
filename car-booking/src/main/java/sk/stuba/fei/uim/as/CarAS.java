@@ -1,5 +1,7 @@
 package sk.stuba.fei.uim.as;
 
+import io.quarkus.mailer.Mail;
+import io.quarkus.mailer.Mailer;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -19,6 +21,9 @@ public class CarAS {
 
     @Inject
     CarMapping carMapping;
+
+    @Inject
+    Mailer mailer;
 
     public GetCarDetailDTO getCarDetail(Integer id) {
         Car car = Car.findById(id);
@@ -42,7 +47,8 @@ public class CarAS {
     public void createCarRental(CreateCarRentalDTO createCarRentDTO) throws Exception {
 
         // Skontrolujeme ci existuje zakaznik (pre istotu), skontrolujeme ci je zvolene auto dostupne (pre istotu)
-        if(Customer.findById(createCarRentDTO.getUserId()) == null)
+        Customer customer = Customer.findById(createCarRentDTO.getUserId());
+        if(customer == null)
             throw new NotFoundException("Zákazník sa nenašiel.");
         Car car = Car.findById(createCarRentDTO.getCarId());
         if(!car.getAvailable())
@@ -67,6 +73,21 @@ public class CarAS {
 
         // Ulozime do DB
         carRental.persist();
+
+        Mail mail = Mail.withText(customer.getEmail(),
+                "Car rent confirmation.",
+                (String.format("""
+                                Your car reservation has been successfully created.
+
+                                You can pick up your car from %s of %s.
+
+                                We appreciate your interest.
+                                Alex, Noemi, Daniel, Jozef, Matúš""",
+                        carRental.getCar().getLocation().getAddress(),
+                        carRental.getPickupDate()))
+        );
+
+        mailer.send(mail);
     }
 
     @Transactional
