@@ -1,46 +1,33 @@
 package sk.stuba.fei.uim.car;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.mailer.Mailer;
 import io.quarkus.panache.mock.PanacheMock;
-import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import sk.stuba.fei.uim.as.CarAS;
 import sk.stuba.fei.uim.entity.car.Car;
-import sk.stuba.fei.uim.entity.car.CarRental;
 import sk.stuba.fei.uim.entity.car.Location;
 import sk.stuba.fei.uim.entity.customer.Customer;
 import sk.stuba.fei.uim.entity.dto.*;
-import sk.stuba.fei.uim.mapping.CarMapping;
-import sk.stuba.fei.uim.rest.CarResource;
+
 import sk.stuba.fei.uim.utils.TestUtils;
-import static org.mockito.ArgumentMatchers.any;
 
 
 import static io.quarkus.panache.mock.PanacheMock.doNothing;
 import static org.mockito.Mockito.when;
-import org.junit.jupiter.api.Test;
-import sk.stuba.fei.uim.as.CarAS;
-import sk.stuba.fei.uim.entity.customer.Customer;
 import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
-import java.time.chrono.MinguoChronology;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 
 @QuarkusTest
 public class CarASTest {
@@ -48,14 +35,8 @@ public class CarASTest {
     @Inject
     CarAS carAS;
 
-//    @InjectMock
-//    CarAS carAS;
-
     @Inject
     TestUtils testUtils;
-
-    @Inject
-    CarResource carResource;
 
     private Car car = new Car();
 
@@ -125,17 +106,25 @@ public class CarASTest {
      //nerozumiem preco mi toto nejde
      @Test
      public void getAvailableCarsSelectListTest() {
-        Location test = testUtils.setUpLocation();
+         Location test = testUtils.setUpLocation();
          // Mock the behavior of CarAS.getLocationSelectList()
-         List<Location> mockLocationList = new ArrayList<>();
-         mockLocationList.add(test);
-         PanacheMock.mock(Location.class);
+         List<Car> cars = new ArrayList<>();
+         Car carTest = new Car();
+         carTest.setBrand("TEST");
+         carTest.setDailyRate(100);
+         carTest.setYear(2000);
+         carTest.setModel("TESTMODEL");
+         cars.add(carTest);
 
-         Mockito.when(Location.findAll().list()).thenReturn((List) mockLocationList);
+         PanacheQuery query = Mockito.mock(PanacheQuery.class);
+         PanacheMock.mock(Car.class);
 
-         List<SelecItemDTO> selectItemDTO = carAS.getLocationSelectList();
+         Mockito.when(Car.find("available = ?1 and location.id = ?2", true, 3)).thenReturn(query);
+         Mockito.when(query.list()).thenReturn(cars);
 
-         assertEquals("3",selectItemDTO.get(0).getKey());
+         List<GetAvailableCarsDTO> selectItemDTO = carAS.getAvailableCarsSelectList(test.getLocationId());
+
+         assertEquals("TEST", selectItemDTO.get(0).getBrand());
      }
 
     @Test
