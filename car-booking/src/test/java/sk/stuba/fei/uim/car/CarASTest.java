@@ -104,36 +104,20 @@ public class CarASTest {
 
     @Test
     public void getLocationSelectListTest() {
-        // Mock the behavior of CarAS.getLocationSelectList()
-        List<Location> mockLocationList = Arrays.asList(
-                new Location(),
-                new Location()
-                // Add more mock data as needed
-        );
-        Mockito.when(carAS.getLocationSelectList()).thenReturn((List) mockLocationList);
+        Location location = testUtils.setUpLocation();
+        List<Location> locations = new ArrayList<>();
+        locations.add(location);
 
-        // Call the method from CarResource
-        Response response = carResource.getLocations();
+        PanacheQuery query = Mockito.mock(PanacheQuery.class);
+        PanacheMock.mock(Location.class);
 
-        // Assert the response
-        assertNotNull(response);
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        Mockito.when(Location.findAll()).thenReturn(query);
+        Mockito.when(query.list()).thenReturn(locations);
 
-        // Optionally, assert the content of the response with explicit casting
-        List<?> responseEntity = (List<?>) response.getEntity();
-        assertNotNull(responseEntity);
-        assertEquals(mockLocationList.size(), responseEntity.size());
-        // Explicitly cast the elements to the expected type if necessary
-        if (!responseEntity.isEmpty()) {
-            Object firstElement = responseEntity.get(0);
-            if (firstElement instanceof SelecItemDTO) {
-                // Handle the case where elements are of type SelecItemDTO
-                List<SelecItemDTO> selecItemDTOList = (List<SelecItemDTO>) responseEntity;
-                // Additional assertions or processing as needed
-            } else {
-                // Handle other types if necessary
-            }
-        }
+        List<SelecItemDTO> selectItemDTOS = carAS.getLocationSelectList();
+
+        assertEquals("3", selectItemDTOS.get(0).getKey());
+
     }
 
 
