@@ -15,13 +15,7 @@ import sk.stuba.fei.uim.entity.customer.Customer;
 import sk.stuba.fei.uim.entity.dto.*;
 
 import sk.stuba.fei.uim.utils.TestUtils;
-
-
-import static io.quarkus.panache.mock.PanacheMock.doNothing;
-import static org.mockito.Mockito.when;
 import sk.stuba.fei.uim.entity.dto.CreateCustomerDTO;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -101,13 +95,10 @@ public class CarASTest {
 
     }
 
-
-
      //nerozumiem preco mi toto nejde
      @Test
      public void getAvailableCarsSelectListTest() {
          Location test = testUtils.setUpLocation();
-         // Mock the behavior of CarAS.getLocationSelectList()
          List<Car> cars = new ArrayList<>();
          Car carTest = new Car();
          carTest.setBrand("TEST");
@@ -128,8 +119,7 @@ public class CarASTest {
      }
 
     @Test
-    public void createCarRentalTest() throws Exception {
-        PanacheMock.mock(Car.class);
+    public void createCarRentalTest(){
         PanacheMock.mock(Customer.class);
 
         CreateCarRentalDTO createCarRentDTO = new CreateCarRentalDTO();
@@ -140,20 +130,31 @@ public class CarASTest {
         createCarRentDTO.setReturnDate(LocalDate.now().plusDays(3));
         createCarRentDTO.setStatus("Booked");
 
-        // Mock the findById() methods to return customer and available car
-        Customer customer = new Customer();
-        customer.setEmail("test@example.com");
+        Customer customer = null;
         Mockito.when(Customer.findById(1)).thenReturn(customer);
 
-        Car availableCar = new Car();
-        availableCar.setAvailable(true);
-        availableCar.setDailyRate(5);
-        Mockito.when(Car.findById(1)).thenReturn(availableCar);
+        assertThrows(NotFoundException.class, () -> carAS.createCarRental(createCarRentDTO));
+    }
 
-        CarAS carAS = new CarAS();
-        carAS.createCarRental(createCarRentDTO);
+    @Test
+    public void createCarRentalCarNotAvailableTest(){
+        PanacheMock.mock(Customer.class, Car.class);
 
-        assertFalse(availableCar.getAvailable());
+        CreateCarRentalDTO createCarRentDTO = new CreateCarRentalDTO();
+        createCarRentDTO.setUserId(1);
+        createCarRentDTO.setCarId(1);
+        createCarRentDTO.setDriverName("TestDriver");
+        createCarRentDTO.setPickupDate(LocalDate.now());
+        createCarRentDTO.setReturnDate(LocalDate.now().plusDays(3));
+        createCarRentDTO.setStatus("Booked");
+
+        Customer customer = testUtils.setUpCustomer();
+        car.setAvailable(false);
+
+        Mockito.when(Customer.findById(1)).thenReturn(customer);
+        Mockito.when(Car.findById(Mockito.any())).thenReturn(car);
+
+        assertThrows(Exception.class, () -> carAS.createCarRental(createCarRentDTO));
     }
 
     @Test
@@ -163,19 +164,20 @@ public class CarASTest {
         CreateCustomerDTO createCustomerDTO = new CreateCustomerDTO();
         createCustomerDTO.setFirstName("TestFirstName");
         createCustomerDTO.setLastName("TestLastName");
-        createCustomerDTO.setEmail("test@example.com");
+        createCustomerDTO.setEmail("testDTO@example.com");
         createCustomerDTO.setIdCard("123456789");
 
-        // Mock the find() method to return null (indicating customer does not exist)
-        when(Customer.find("idCard = ?1", "123456789").firstResult()).thenReturn(null);
+        Customer customer = testUtils.setUpCustomer();
 
-        // Mock the persistAndFlush() method
-        doNothing().when(Customer.class).persistAndFlush();
+        PanacheQuery query = Mockito.mock(PanacheQuery.class);
 
-        CarAS carAS = new CarAS();
-        Integer customerId = carAS.createCustomer(createCustomerDTO);
+        Mockito.when(Customer.find("idCard = ?1", createCustomerDTO.getIdCard())).thenReturn(query);
+        Mockito.when(query.firstResult()).thenReturn(customer);
+        carAS.createCustomer(createCustomerDTO);
 
-        assertNotNull(customerId);
+        assertEquals("TestFirstName", customer.getFirstName());
+        assertEquals("TestLastName", customer.getLastName());
+        assertEquals("123456789", customer.getIdCard());
     }
 
 }
