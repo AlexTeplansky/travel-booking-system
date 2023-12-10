@@ -7,8 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="flight-booking" />
-        <module name="car-booking" />
         <module name="hotel-booking" />
+        <module name="car-booking" />
       </profile>
     </annotationProcessing>
   </component>

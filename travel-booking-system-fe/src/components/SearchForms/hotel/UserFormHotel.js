@@ -1,7 +1,12 @@
 import axios from "axios";
+import {Alert, Snackbar} from "@mui/material";
+import React, {useState} from "react";
 
+function UserFormHotel({room, checkIn, checkOut, handleClose}) {
 
-function UserForm({flight, numOfPassengers, handleClose}) {
+    const [errorMessage, setErrorMessage] = useState("")
+    const [toastOpen, setToastOpen] = useState(false);
+
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -12,18 +17,35 @@ function UserForm({flight, numOfPassengers, handleClose}) {
             idCard: e.target[3].value
         }
 
-        axios.post("http://localhost:8703/api/flight/customer", userData).then(res => {
-            const rentData = {
+        console.log(userData)
+
+        axios.post("http://localhost:8702/api/hotel/customer", userData).then(res => {
+            const rentRoomData = {
                 userId: res.data,
-                flightId: flight.id,
-                passengerName: userData.firstName +" " + userData.lastName,
-                numberOfPassengers: numOfPassengers,
-                status: "Confirmed"
+                roomId: room.id,
+                dateIn: checkIn,
+                dateOut: checkOut,
+                status: "Active",
+                price: room.price
             }
-            axios.post("http://localhost:8703/api/flight/rent", rentData).then(res => console.log("return " + res))
-            handleClose(false)
+
+            if(res.data === "" || res.data === null || res.data === undefined) {
+                setErrorMessage("Customer with that id is in system with different name.")
+                setToastOpen(true)
+            }
+            else{
+                axios.post("http://localhost:8702/api/hotel/reserve", rentRoomData).then(res => console.log(res))
+                handleClose(false)
+            }
+        }).catch(error => {
+            setErrorMessage(error.message)
+            setToastOpen(true)
         })
     }
+
+    const handleCloseToast = () => {
+        setToastOpen(false);
+    };
 
     return (
         <form className={"form"} onSubmit={(e) => handleSubmit(e)}>
@@ -51,12 +73,17 @@ function UserForm({flight, numOfPassengers, handleClose}) {
                     <input required className="input" type={"text"} id={"idCard"} name={"idCard"} placeholder={"Id card"}/>
                 </div>
             </div>
+            <div className="searchFormRow">
+                <button className="classicButton" type="submit" >Send hotel rental</button>
+            </div>
 
-                <button className="classicButton" type="submit" >Send flight rental</button>
-
-
+            <Snackbar open={toastOpen} onClose={handleCloseToast} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                <Alert onClose={handleCloseToast} severity="error" sx={{width: '100%'}}>
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </form>
     )
 }
 
-export default UserForm
+export default UserFormHotel

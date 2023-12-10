@@ -1,11 +1,8 @@
 import '../../../App.css';
 import '../../../Button.css';
 import '../../../style/Form.css';
-import axios from "axios"
 
 import NumberInput from "../NumberInput";
-import {useEffect, useState} from "react";
-import AvailableFlight from "./AvailableFlight";
 
 function FlightSearchForm({
                               locations,
@@ -71,15 +68,16 @@ function FlightSearchForm({
             <div className="searchFormRow">
                 <div className="searchFormItem">
                     <label className="myLabelStyle">Adults</label>
-                    <NumberInput id="NumOfAdults"/>
+                    <NumberInput id="NumOfAdults" defaultValue = "1"/>
+
                 </div>
                 <div className="searchFormItem">
                     <label className="myLabelStyle">Children</label>
-                    <NumberInput id="NumOfChildren"/>
+                    <NumberInput id="NumOfChildren" defaultValue = "0"/>
                 </div>
                 <div className="searchFormItem">
-                    <label className="myLabelStyle">Infants</label>
-                    <NumberInput id="NumOfInfants"/>
+                    <label className="myLabelStyle" >Infants</label>
+                    <NumberInput id="NumOfInfants" defaultValue = "0"/>
                 </div>
             </div>
 

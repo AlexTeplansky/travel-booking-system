@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import AvailableCar from "./AvailableCar";
-import UserForm from "./UserForm";
+import UserFormCar from "./UserFormCar";
 
 
 function DialogCarUserForm({car, selectedLocation, pickUp, dropOff, handleClose}) {
@@ -54,7 +54,7 @@ function DialogCarUserForm({car, selectedLocation, pickUp, dropOff, handleClose}
                 {carDetailOpen && <AvailableCar car={car} isSelected={false}/>}
             </div>
 
-            <UserForm car={car} dropOff={dropOff} pickUp={pickUp} handleClose={handleClose}/>
+            <UserFormCar car={car} dropOff={dropOff} pickUp={pickUp} handleClose={handleClose}/>
         </div>)
 }
 

@@ -1,16 +1,12 @@
 import '../../../App.css';
 import '../../../Button.css';
 import '../../../style/Form.css';
-import axios from "axios"
-
-import NumberInput from "../NumberInput";
-import {useEffect, useState} from "react";
 
 function AvailableFlight({flight, onSelect, isSelected}) {
 
 
     return (
-        <div className={isSelected ? "itemSelected" : "itemNotSelected"}>
+        <div style={{backgroundColor: isSelected ? "#265426" : ""}}>
             <div className="searchFormRow">
                 <div className="searchFormItem">
                     <label className="responseText">Departure date: </label>
@@ -38,14 +34,6 @@ function AvailableFlight({flight, onSelect, isSelected}) {
                 </div>
             </div>
 
-            <div className="searchFormRow">
-                <div className="searchFormItem">
-                    <label className="responseText">Available seats: </label>
-                </div>
-                <div className="searchFormItem">
-                    <label className="responseText">{flight.availableSeats}</label>
-                </div>
-            </div>
 
             {onSelect !== undefined &&
                 <div className="searchFormRow">

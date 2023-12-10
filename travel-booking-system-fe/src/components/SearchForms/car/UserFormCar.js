@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-function UserForm({car, pickUp, dropOff, handleClose}) {
+function UserFormCar({car, pickUp, dropOff, handleClose}) {
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -61,4 +61,4 @@ function UserForm({car, pickUp, dropOff, handleClose}) {
 )
 }
 
-export default UserForm
+export default UserFormCar

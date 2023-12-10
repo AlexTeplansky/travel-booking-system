@@ -14,6 +14,16 @@ public class CreateRoomReservationDTO {
 
     private String status;
 
+    private Integer price;
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     public Integer getRoomId() {return roomId;}
 
     public void setRoomId(Integer roomId) {this.roomId = roomId;}

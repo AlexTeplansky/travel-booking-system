@@ -143,4 +143,18 @@ public class Flight extends PanacheEntityBase {
         result = 31 * result + (ticketPrice != null ? ticketPrice.hashCode() : 0);
         return result;
     }
+
+    public Flight(Integer flightId, Airline airline, String origin, String destination, Date departureDate, Date arrivalDate, Object availableSeats, Integer ticketPrice) {
+        this.flightId = flightId;
+        this.airline = airline;
+        this.origin = origin;
+        this.destination = destination;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.availableSeats = availableSeats;
+        this.ticketPrice = ticketPrice;
+    }
+
+    public Flight() {
+    }
 }

@@ -110,7 +110,7 @@ function CarSearch() {
             }
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>Customer information</DialogTitle>
                 <DialogContent>
                     <DialogCarUserForm car={selectedCar}
                                        selectedLocation={selectedLocation}

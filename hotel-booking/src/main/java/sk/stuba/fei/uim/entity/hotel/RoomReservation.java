@@ -8,8 +8,9 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "room_reservation", schema = "public", catalog = "hotel_db")
+@SequenceGenerator(name = "hotelSequence", sequenceName = "hotelsequence", allocationSize = 1, initialValue = 10)
 public class RoomReservation extends PanacheEntityBase {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "hotelSequence", strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "reservation_id")
     private Integer reservationId;

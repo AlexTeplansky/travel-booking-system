@@ -26,12 +26,12 @@ public class Room extends PanacheEntityBase {
     private Boolean available;
 
     @Basic
-    @Column(name = "daily_rate")
-    private Integer dailyRate;
+    @Column(name = "price")
+    private Integer price;
 
-    public Integer getDailyRate() {return dailyRate;}
+    public Integer getPrice() {return price;}
 
-    public void setDailyRate(Integer dailyRate) {this.dailyRate = dailyRate;}
+    public void setPrice(Integer price) {this.price = price;}
 
     @OneToMany(mappedBy = "room")
     private List<RoomReservation> reservations;
